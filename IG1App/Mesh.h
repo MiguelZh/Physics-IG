@@ -20,7 +20,7 @@ public:
 	static Mesh* generaRectanguloRGB(GLdouble w, GLdouble h, double ejeZ);
 	static Mesh* generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCubo(GLdouble l);
-
+	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
  
 	Mesh(void) { };
 	~Mesh(void);
@@ -36,6 +36,7 @@ protected:
 
 	glm::dvec3* vertices = nullptr;  // vertex array
 	glm::dvec4* colors = nullptr;    // color array
+	glm::dvec2* textures = nullptr // textures array
 	
 };
 

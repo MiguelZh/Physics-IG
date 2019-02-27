@@ -222,3 +222,22 @@ void Caja::update()
 {
 
 }
+
+RectangleTex::RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	mesh = Mesh::generaRectanguloTexCor(w,  h, rw,  rh); // con coord. de textura
+	texture.load("..\\Bmps\\Zelda.bmp"); // cargamos la imagen
+}
+
+RectangleTex::~RectangleTex()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void RectangleTex::render(Camera const & cam)
+{
+}
+
+void RectangleTex::update()
+{
+}

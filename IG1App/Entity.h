@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Mesh.h"
+#include"Texture.h"
 
 //-------------------------------------------------------------------------
 
@@ -29,6 +30,7 @@ protected:
 	Mesh* mesh = nullptr;   // surface mesh
 	glm::dmat4 modelMat;    // modeling matrix
 	double angulo = 0, angulo2 = 0;
+	Texture texture; // w, h, id 
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
 };
@@ -97,6 +99,12 @@ class Caja : public Entity {
 public:
 	Caja(GLdouble l);
 	~Caja();
+	virtual void render(Camera const& cam);
+	void update();
+};
+class RectangleTex : public Entity {
+	RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~RectangleTex();
 	virtual void render(Camera const& cam);
 	void update();
 };

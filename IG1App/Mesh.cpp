@@ -225,3 +225,19 @@ Mesh * Mesh::generaContCubo(GLdouble l)
 	return cubo;
 }
 
+Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	int ejeZ = 0;
+	Mesh * rectangulo = new Mesh();
+	rectangulo->primitive = GL_TRIANGLE_STRIP;
+	rectangulo->numVertices = 4;
+	rectangulo->vertices = new dvec3[rectangulo->numVertices];
+	rectangulo->vertices[0] = dvec3(ejeZ, ejeZ, ejeZ);
+	rectangulo->vertices[1] = dvec3(w, ejeZ, ejeZ);
+	rectangulo->vertices[2] = dvec3(ejeZ, ejeZ, h);
+	rectangulo->vertices[3] = dvec3(w, ejeZ, h);
+
+	rectangulo->textures = new dvec2(rectangulo->numVertices);
+	return nullptr;
+}
+
