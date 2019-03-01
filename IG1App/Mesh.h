@@ -21,6 +21,8 @@ public:
 	static Mesh* generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCubo(GLdouble l);
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	static Mesh* generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h);
+	static Mesh* generaCajaTexCor(GLdouble l);
  
 	Mesh(void) { };
 	~Mesh(void);

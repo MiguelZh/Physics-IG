@@ -26,8 +26,9 @@ void Scene::init()
   grObjects.push_back(new Rectangulo(200, 250,0));
   grObjects.push_back(new Rectangulo(50, 50,2));
   grObjects.push_back(new Estrella3D(35.,7., 35.));
-  grObjects.push_back(new Caja(50.));*/
-  grObjects.push_back(new RectangleTex(100, 100, 1, 1));
+  grObjects.push_back(new Caja(50.));
+  grObjects.push_back(new RectangleTex(100, 100, 1, 1));*/
+  grObjects.push_back(new Estrella3DTex(35., 4., 35.));
 
 
 }

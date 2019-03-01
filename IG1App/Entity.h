@@ -109,4 +109,11 @@ public:
 	virtual void render(Camera const& cam);
 	void update();
 };
+class Estrella3DTex : public Entity {
+public:
+	Estrella3DTex(GLdouble r, GLdouble nL, GLdouble h);
+	~Estrella3DTex();
+	virtual void render(Camera const& cam);
+	void update();
+};
 #endif //_H_Entities_H_

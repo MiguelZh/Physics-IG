@@ -249,4 +249,71 @@ Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	rectangulo->textures[3] = dvec2(rw, rh);
 	return rectangulo;
 }
+Mesh * Mesh::generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h)
+{
+	Mesh* estrella3D = new Mesh();
+	estrella3D->primitive = GL_TRIANGLE_FAN;
+	estrella3D->numVertices = 2 * nL + 2;
+	estrella3D->vertices = new dvec3[estrella3D->numVertices];
+	estrella3D->colors = new dvec4[estrella3D->numVertices];
+	estrella3D->textures = new dvec2[estrella3D->numVertices];
+	dvec3 vo = { 0,0,0 };
+	double ri = r / 2;
+	double x = 0, y = 0;
+	double angulo = 0;
+	double incrAng = 360 / nL / 2;
+	for (int i = 0; i < estrella3D->numVertices; i++) {
+		if (i == 0) {
+			estrella3D->vertices[i] = vo;
+			estrella3D->textures[i] = vo;
+		}
+		else if (i % 2 == 0) {
+			x = r * cos(radians(angulo + incrAng * i));
+			y = r * sin(radians(angulo + incrAng * i));
+			estrella3D->vertices[i] = dvec3(x, y, h);
+			estrella3D->colors[i] = dvec4(0.5, 0., 0., 1.);
+			estrella3D->textures[i] = dvec2(x/(r*2), y/ (h*2));
+		}
+		else {
+			x = ri * cos(radians(angulo + incrAng * i));
+			y = ri * sin(radians(angulo + incrAng * i));
+			estrella3D->vertices[i] = dvec3(x, y, 2 * h / 3);
+			estrella3D->colors[i] = dvec4(0., 0., 0.5, 1.);
+			estrella3D->textures[i] = dvec2(x/ (r*2), y/ (h*2));
+		}
+	}
+	return estrella3D;
+}
+
+Mesh * Mesh::generaCajaTexCor(GLdouble l)
+{
+	Mesh * cubo = new Mesh();
+	cubo->primitive = GL_TRIANGLE_STRIP;
+	cubo->numVertices = 10;
+	cubo->vertices = new dvec3[cubo->numVertices];
+	cubo->colors = new dvec4[cubo->numVertices];
+	cubo->textures = new dvec2[cubo->numVertices];
+	double puntocentro = 0;
+	cubo->vertices[0] = dvec3(puntocentro, l, l);
+	cubo->colors[0] = dvec4(0, 0.7, 0, 0);
+	cubo->vertices[1] = dvec3(puntocentro, puntocentro, l);
+	cubo->colors[1] = dvec4(0, 0.7, 0, 0);
+	cubo->vertices[2] = dvec3(l, l, l);
+	cubo->colors[2] = dvec4(0, 0.7, 0, 0);
+	cubo->vertices[3] = dvec3(l, puntocentro, l);
+	cubo->colors[3] = dvec4(0, 0.7, 0, 0);
+	cubo->vertices[4] = dvec3(l, l, puntocentro);
+	cubo->colors[4] = dvec4(0, 0., 0.7, 0);
+	cubo->vertices[5] = dvec3(l, puntocentro, puntocentro);
+	cubo->colors[5] = dvec4(0, 0., 0.7, 0);
+	cubo->vertices[6] = dvec3(puntocentro, l, puntocentro);
+	cubo->colors[6] = dvec4(0, 0., 0.7, 0);
+	cubo->vertices[7] = dvec3(puntocentro, puntocentro, puntocentro);
+	cubo->colors[7] = dvec4(0, 0., 0.7, 0);
+	cubo->vertices[8] = dvec3(puntocentro, l, l);
+	cubo->colors[8] = dvec4(0.7, 0., 0.7, 0);
+	cubo->vertices[9] = dvec3(puntocentro, puntocentro, l);
+	cubo->colors[9] = dvec4(0.7, 0., 0.7, 0);
+	return cubo;
+}
 

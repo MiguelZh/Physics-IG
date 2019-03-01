@@ -239,7 +239,7 @@ void RectangleTex::render(Camera const & cam)
 	if (mesh != nullptr) {
 		texture.bind();
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//glLineWidth(2);
+		glLineWidth(2);
 		uploadMvM(cam.getViewMat());
 		mesh->render();
 		texture.unbind();
@@ -247,5 +247,36 @@ void RectangleTex::render(Camera const & cam)
 }
 
 void RectangleTex::update()
+{
+}
+
+Estrella3DTex::Estrella3DTex(GLdouble r, GLdouble nL, GLdouble h)
+{
+	mesh = Mesh::generaEstrellaTexCor(r, nL, h);
+	texture.load("..\\Bmps\\baldosaP.bmp"); // cargamos la imagen
+}
+
+Estrella3DTex::~Estrella3DTex()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void Estrella3DTex::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		texture.bind();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glLineWidth(2);
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+		modelMat = rotate(modelMat, radians(180.0), dvec3(0, 1, 0));
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+		modelMat = rotate(modelMat, radians(-180.0), dvec3(0, 1, 0));
+		texture.unbind();
+	}
+}
+
+void Estrella3DTex::update()
 {
 }
