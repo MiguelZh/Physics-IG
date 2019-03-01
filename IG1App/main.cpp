@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 
   // Initialization
   glutInit(&argc, argv);
-
   glutInitContextVersion(3, 3);
   glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
   glutInitContextFlags(GLUT_DEBUG);   // GLUT_FORWARD_COMPATIBLE

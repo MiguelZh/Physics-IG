@@ -20,11 +20,16 @@ void Mesh::render()
       glEnableClientState(GL_COLOR_ARRAY);
       glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate, stride, pointer 
     }
+	if (textures != nullptr) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_DOUBLE, 0, textures);
+	}
 	
     glDrawArrays(primitive, 0, numVertices);   // primitive graphic, first index and number of elements to be rendered
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
   }
 }
 //-------------------------------------------------------------------------
@@ -233,11 +238,15 @@ Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	rectangulo->numVertices = 4;
 	rectangulo->vertices = new dvec3[rectangulo->numVertices];
 	rectangulo->vertices[0] = dvec3(ejeZ, ejeZ, ejeZ);
-	rectangulo->vertices[1] = dvec3(w, ejeZ, ejeZ);
-	rectangulo->vertices[2] = dvec3(ejeZ, ejeZ, h);
-	rectangulo->vertices[3] = dvec3(w, ejeZ, h);
+	rectangulo->vertices[1] = dvec3(ejeZ, h, ejeZ);
+	rectangulo->vertices[2] = dvec3(w, ejeZ, ejeZ);
+	rectangulo->vertices[3] = dvec3(w, h, ejeZ);
 
 	rectangulo->textures = new dvec2(rectangulo->numVertices);
-	return nullptr;
+	rectangulo->textures[0] = dvec2(ejeZ, ejeZ);
+	rectangulo->textures[1] = dvec2(ejeZ, rh);
+	rectangulo->textures[2] = dvec2(rw, ejeZ);
+	rectangulo->textures[3] = dvec2(rw, rh);
+	return rectangulo;
 }
 

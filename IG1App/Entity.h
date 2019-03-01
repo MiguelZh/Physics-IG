@@ -103,6 +103,7 @@ public:
 	void update();
 };
 class RectangleTex : public Entity {
+public:
 	RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	~RectangleTex();
 	virtual void render(Camera const& cam);

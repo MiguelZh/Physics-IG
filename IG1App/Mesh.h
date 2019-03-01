@@ -36,7 +36,7 @@ protected:
 
 	glm::dvec3* vertices = nullptr;  // vertex array
 	glm::dvec4* colors = nullptr;    // color array
-	glm::dvec2* textures = nullptr; // textures array
+	glm::dvec2* textures = nullptr; // textures array // array de coordenadas de textura
 	
 };
 

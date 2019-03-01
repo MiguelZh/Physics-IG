@@ -11,6 +11,7 @@ void Scene::init()
 { // OpenGL basic setting
   glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
+  glEnable(GL_TEXTURE_2D);
      
   // lights
   // textures  
@@ -26,6 +27,7 @@ void Scene::init()
   grObjects.push_back(new Rectangulo(50, 50,2));
   grObjects.push_back(new Estrella3D(35.,7., 35.));
   grObjects.push_back(new Caja(50.));*/
+  grObjects.push_back(new RectangleTex(100, 100, 1, 1));
 
 
 }

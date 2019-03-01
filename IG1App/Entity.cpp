@@ -236,6 +236,14 @@ RectangleTex::~RectangleTex()
 
 void RectangleTex::render(Camera const & cam)
 {
+	if (mesh != nullptr) {
+		texture.bind();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glLineWidth(2);
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+		texture.unbind();
+	}
 }
 
 void RectangleTex::update()
