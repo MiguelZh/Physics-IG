@@ -293,27 +293,38 @@ Mesh * Mesh::generaCajaTexCor(GLdouble l)
 	cubo->vertices = new dvec3[cubo->numVertices];
 	cubo->colors = new dvec4[cubo->numVertices];
 	cubo->textures = new dvec2[cubo->numVertices];
+
 	double puntocentro = 0;
+	double textL = l /(l/2);
 	cubo->vertices[0] = dvec3(puntocentro, l, l);
-	cubo->colors[0] = dvec4(0, 0.7, 0, 0);
+	cubo->textures[0] = dvec2(puntocentro, textL);
+
 	cubo->vertices[1] = dvec3(puntocentro, puntocentro, l);
-	cubo->colors[1] = dvec4(0, 0.7, 0, 0);
+	cubo->textures[1] = dvec2(puntocentro, puntocentro);
+
 	cubo->vertices[2] = dvec3(l, l, l);
-	cubo->colors[2] = dvec4(0, 0.7, 0, 0);
+	cubo->textures[2] = dvec2(textL, textL);
+
 	cubo->vertices[3] = dvec3(l, puntocentro, l);
-	cubo->colors[3] = dvec4(0, 0.7, 0, 0);
+	cubo->textures[3] = dvec2(textL, puntocentro);
+
 	cubo->vertices[4] = dvec3(l, l, puntocentro);
-	cubo->colors[4] = dvec4(0, 0., 0.7, 0);
+	cubo->textures[4] = dvec2(textL, textL);
+
 	cubo->vertices[5] = dvec3(l, puntocentro, puntocentro);
-	cubo->colors[5] = dvec4(0, 0., 0.7, 0);
+	cubo->textures[5] = dvec2(textL, puntocentro);
+
 	cubo->vertices[6] = dvec3(puntocentro, l, puntocentro);
-	cubo->colors[6] = dvec4(0, 0., 0.7, 0);
+	cubo->textures[6] = dvec2(puntocentro, textL);
+
 	cubo->vertices[7] = dvec3(puntocentro, puntocentro, puntocentro);
-	cubo->colors[7] = dvec4(0, 0., 0.7, 0);
+	cubo->textures[7] = dvec2(puntocentro, puntocentro);
+
 	cubo->vertices[8] = dvec3(puntocentro, l, l);
-	cubo->colors[8] = dvec4(0.7, 0., 0.7, 0);
+	cubo->textures[8] = dvec2(puntocentro, textL);
+
 	cubo->vertices[9] = dvec3(puntocentro, puntocentro, l);
-	cubo->colors[9] = dvec4(0.7, 0., 0.7, 0);
+	cubo->textures[9] = dvec2(puntocentro, puntocentro);
 	return cubo;
 }
 

@@ -30,7 +30,7 @@ protected:
 	Mesh* mesh = nullptr;   // surface mesh
 	glm::dmat4 modelMat;    // modeling matrix
 	double angulo = 0, angulo2 = 0;
-	Texture texture; // w, h, id 
+	Texture texture, texture1; // w, h, id 
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
 };
@@ -113,6 +113,13 @@ class Estrella3DTex : public Entity {
 public:
 	Estrella3DTex(GLdouble r, GLdouble nL, GLdouble h);
 	~Estrella3DTex();
+	virtual void render(Camera const& cam);
+	void update();
+};
+class CuboTex : public Entity {
+public:
+	CuboTex(GLdouble l);
+	~CuboTex();
 	virtual void render(Camera const& cam);
 	void update();
 };

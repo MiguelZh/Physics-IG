@@ -279,4 +279,44 @@ void Estrella3DTex::render(Camera const & cam)
 
 void Estrella3DTex::update()
 {
+	setModelMat(dmat4(1));
+	dmat4 rotate1 = translate(getModelMat(), dvec3(30, 100, 20));
+	rotate1 = rotate(rotate1, radians(angulo += 5.), dvec3(0, 1, 0));
+	rotate1 = rotate(rotate1, radians(angulo += 5.), dvec3(0, 0, 1));
+	setModelMat(rotate1);
+}
+
+CuboTex::CuboTex(GLdouble l)
+{
+	mesh = Mesh::generaCajaTexCor(l);
+	texture.load("..\\Bmps\\baldosaF.bmp"); // cargamos la imagen
+	texture1.load("..\\Bmps\\baldosaC.bmp"); // cargamos segunda imagen
+}
+
+CuboTex::~CuboTex()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void CuboTex::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
+		texture.bind();
+		uploadMvM(cam.getViewMat());
+		glLineWidth(2);
+		mesh->render();
+		texture.unbind();
+
+		glCullFace(GL_BACK);
+		texture1.bind();
+		mesh->render();
+		texture1.unbind();
+		glDisable(GL_CULL_FACE);
+	}
+}
+
+void CuboTex::update()
+{
 }

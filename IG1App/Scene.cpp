@@ -29,6 +29,7 @@ void Scene::init()
   grObjects.push_back(new Caja(50.));
   grObjects.push_back(new RectangleTex(100, 100, 1, 1));*/
   grObjects.push_back(new Estrella3DTex(35., 4., 35.));
+  grObjects.push_back(new CuboTex(40));
 
 
 }
