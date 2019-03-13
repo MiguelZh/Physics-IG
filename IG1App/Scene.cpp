@@ -18,16 +18,7 @@ void Scene::init()
   // meshes
 
   // Graphics objects (entities) of the scene
-  /*grObjects.push_back(new EjesRGB(200.0)); 
-  glm::dvec2 vector2d =dvec2(0.0, 0.0);
-  grObjects.push_back(new Poliespiral(vector2d, 0, 45, 1, 1, 50));
-  grObjects.push_back(new Dragon(3000));
-  grObjects.push_back(new TrianguloAnimado(10));
-  grObjects.push_back(new Rectangulo(200, 250,0));
-  grObjects.push_back(new Rectangulo(50, 50,2));
-  grObjects.push_back(new Estrella3D(35.,7., 35.));
-  grObjects.push_back(new Caja(50.));
-  grObjects.push_back(new RectangleTex(100, 100, 1, 1));*/
+ 
   cleangameObjects();
   grObjects.push_back(new RectangleTex(200, 200, 4, 4));
   grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.), dvec3(1, 0, 0)));
@@ -37,8 +28,10 @@ void Scene::init()
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(15,30,0)));
   grObjects.push_back(new Cristalera(200));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-40, 30, -45)));
-  grObjects.push_back(new Foto(80,80, 1, 1));
-  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.), dvec3(1, 0, 0)));
+  grObjects.push_back(new Foto(40,40, 1, 1));
+  //grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.), dvec3(1, 0, 0)));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(60, 45, 20)));
+  //grObjects.push_back(new Planta(80, 80, 1, 1));
 }
 void Scene::init2()
 {
@@ -52,6 +45,12 @@ void Scene::init2()
 }
 void Scene::cleangameObjects()
 {
+	//eliminar el objecto y hacer que apunte a null
+	for (Entity* el : grObjects)
+	{
+		delete el;  el = nullptr;
+	}
+	// elimina aquellos objetos con puntero null
 	if (grObjects.size() != 0) {
 		int size = grObjects.size();
 		for (int i = 0; i < size; i++) {

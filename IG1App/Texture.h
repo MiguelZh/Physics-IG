@@ -10,6 +10,7 @@ public:
 	void bind(GLint modo = GL_REPLACE); // para mezcla de colores
 	void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
 	void loadColorBuffer();
+	static void save(const std::string & BMP_Name); // static para que sea accesible desde el main
 protected:
 	GLuint w, h; // dimensiones de la imagen
 	GLuint id; // identificador interno (GPU) de la textura

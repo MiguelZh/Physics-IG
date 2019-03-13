@@ -381,3 +381,39 @@ void Foto::render(Camera const & cam)
 void Foto::update()
 {
 }
+
+Planta::Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
+	texture.load("..\\Bmps\\grass.bmp");
+	repetitions = (rw > 0) ? rw : 1;
+}
+
+Planta::~Planta()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void Planta::render(Camera const & cam)
+{
+	int angulo = 20;
+	if (mesh != nullptr) {
+		dmat4 originalMat = getModelMat();
+		glDepthMask(GL_FALSE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		dmat4 auxMat = originalMat;
+		auxMat = rotate(auxMat, radians((180.0 / 20)), dvec3(0.0, 1.0, 0.0));
+		setModelMat(auxMat);
+		uploadMvM(cam.getViewMat());
+		texture.bind();
+		mesh->render();
+		texture.unbind();
+		setModelMat(originalMat);
+		glLineWidth(1);
+		glDepthMask(GL_TRUE);
+	}
+}
+
+void Planta::update()
+{
+}

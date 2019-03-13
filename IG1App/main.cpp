@@ -35,6 +35,7 @@ void update();
 
 //-------------------------------------------------------------------------
 GLuint last_update_tick; bool stopAnim = false;
+bool init1 = true;
 int main(int argc, char *argv[])
 {
   cout << "Starting console..." << '\n';
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
   
   // Callback registration
   glutReshapeFunc(resize);
-  glutKeyboardFunc(key);
+  glutKeyboardFunc(key); 
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
   glutIdleFunc(update);
@@ -65,9 +66,9 @@ int main(int argc, char *argv[])
   cout << glGetString(GL_VENDOR) << '\n';
 
   // after creating the context
-  camera.set2D();
-  scene.init();    
-    glutMainLoop(); 
+  camera.set2D(); 
+  scene.init();     
+  glutMainLoop(); 
     
   //cin.ignore(INT_MAX, '\n');  cin.get();  
   glutDestroyWindow(win);  // Destroy the context 
@@ -105,13 +106,22 @@ void key(unsigned char key, int x, int y)
     glutLeaveMainLoop();  // Freeglut's sentence for stopping glut's main loop 
     break;
   case 51:
-	  scene.init();
+	  if (!init1) {
+		  scene.init();
+		  init1 = !init1;
+	  }
 	  break;
   case 50:
-	  scene.init2();
+	  if (init1) {
+		  scene.init2();
+		  init1 = !init1;
+	  }
 	  break;
   case'u':
 	  stopAnim = !stopAnim;
+	  break;
+  case 'f':
+	  Texture::save("../Bmps/screenshot.bmp");
 	  break;
   case '+': 
     camera.uploadScale(+0.02);   // zoom in  (increases the scale)

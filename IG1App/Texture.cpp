@@ -23,6 +23,20 @@ void Texture::loadColorBuffer()
 	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT),0);
 	glReadBuffer(GL_BACK);
 }
+void Texture::save(const std::string & BMP_Name)
+{
+	PixMap32RGBA pic;
+	pic.create_pixmap(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+
+
+	glReadBuffer(GL_FRONT);
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0);
+	glReadBuffer(GL_BACK);
+
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pic.data());
+
+	pic.save_bmp24BGR(BMP_Name);
+}
 void Texture::load(const std::string & BMP_Name, GLubyte alpha) {
 	if (id == 0) init();
 	PixMap32RGBA pixMap; // var. local para cargar la imagen del archivo

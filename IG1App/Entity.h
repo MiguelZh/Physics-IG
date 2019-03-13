@@ -22,7 +22,7 @@ public:
 
 	// modeling matrix
 	glm::dmat4 const& getModelMat() const { return modelMat; };
-
+	GLint repetitions = 1;
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
   
 protected:
@@ -134,6 +134,13 @@ class Foto : public Entity {
 public:
 	Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	~Foto();
+	virtual void render(Camera const& cam);
+	void update();
+};
+class Planta : public Entity {
+public:
+	Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~Planta();
 	virtual void render(Camera const& cam);
 	void update();
 };
