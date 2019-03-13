@@ -226,7 +226,7 @@ void Caja::update()
 RectangleTex::RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
 {
 	mesh = Mesh::generaRectanguloTexCor(w,  h, rw,  rh); // con coord. de textura
-	texture.load("..\\Bmps\\Zelda.bmp"); // cargamos la imagen
+	texture.load("..\\Bmps\\baldosaC.bmp"); // cargamos la imagen
 }
 
 RectangleTex::~RectangleTex()
@@ -290,7 +290,7 @@ CuboTex::CuboTex(GLdouble l)
 {
 	mesh = Mesh::generaCajaTexCor(l);
 	texture.load("..\\Bmps\\baldosaF.bmp"); // cargamos la imagen
-	texture1.load("..\\Bmps\\baldosaC.bmp"); // cargamos segunda imagen
+	texture1.load("..\\Bmps\\container.bmp"); // cargamos segunda imagen
 }
 
 CuboTex::~CuboTex()
@@ -318,5 +318,66 @@ void CuboTex::render(Camera const & cam)
 }
 
 void CuboTex::update()
+{
+}
+
+Cristalera::Cristalera(GLdouble l)
+{
+	mesh = Mesh::generaCajaTexCor(l);
+	texture.load("..\\Bmps\\cristalTri.bmp",150); // cargamos la imagen
+}
+
+Cristalera::~Cristalera()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void Cristalera::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+
+		uploadMvM(cam.getViewMat());
+		glPolygonMode(GL_NONE, GL_LINE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthMask(GL_FALSE);
+		glLineWidth(1);
+		texture.bind();
+		mesh->render();
+		texture.unbind();
+		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
+	}
+}
+
+void Cristalera::update()
+{
+}
+
+Foto::Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
+}
+
+Foto::~Foto()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void Foto::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		texture.loadColorBuffer();
+
+		uploadMvM(cam.getViewMat());
+		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		texture.bind();
+		mesh->render();
+		texture.unbind();
+	}
+}
+
+void Foto::update()
 {
 }

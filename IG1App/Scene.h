@@ -19,7 +19,8 @@ public:
     Scene() { };
 	~Scene();
     void init(); 
-
+	void init2();
+	void cleangameObjects();
     void render(Camera const& cam);
 	void update();
 	  

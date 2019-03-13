@@ -67,8 +67,7 @@ int main(int argc, char *argv[])
   // after creating the context
   camera.set2D();
   scene.init();    
-  
-  glutMainLoop(); 
+    glutMainLoop(); 
     
   //cin.ignore(INT_MAX, '\n');  cin.get();  
   glutDestroyWindow(win);  // Destroy the context 
@@ -105,14 +104,20 @@ void key(unsigned char key, int x, int y)
   case 27:  // Escape key 
     glutLeaveMainLoop();  // Freeglut's sentence for stopping glut's main loop 
     break;
+  case 51:
+	  scene.init();
+	  break;
+  case 50:
+	  scene.init2();
+	  break;
   case'u':
 	  stopAnim = !stopAnim;
 	  break;
   case '+': 
-    camera.uploadScale(+0.01);   // zoom in  (increases the scale)
+    camera.uploadScale(+0.02);   // zoom in  (increases the scale)
     break;
   case '-':
-    camera.uploadScale(-0.01);   // zoom out (decreases the scale)
+    camera.uploadScale(-0.02);   // zoom out (decreases the scale)
     break;
   case 'l':
 	camera.set3D(); 

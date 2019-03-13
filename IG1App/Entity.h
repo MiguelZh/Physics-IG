@@ -123,4 +123,18 @@ public:
 	virtual void render(Camera const& cam);
 	void update();
 };
+class Cristalera : public Entity {
+public:
+	Cristalera(GLdouble l);
+	~Cristalera();
+	virtual void render(Camera const& cam);
+	void update();
+};
+class Foto : public Entity {
+public:
+	Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~Foto();
+	virtual void render(Camera const& cam);
+	void update();
+};
 #endif //_H_Entities_H_

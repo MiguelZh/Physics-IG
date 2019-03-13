@@ -297,34 +297,40 @@ Mesh * Mesh::generaCajaTexCor(GLdouble l)
 	double puntocentro = 0;
 	double textL = l /(l/2);
 	cubo->vertices[0] = dvec3(puntocentro, l, l);
-	cubo->textures[0] = dvec2(puntocentro, textL);
 
 	cubo->vertices[1] = dvec3(puntocentro, puntocentro, l);
-	cubo->textures[1] = dvec2(puntocentro, puntocentro);
 
 	cubo->vertices[2] = dvec3(l, l, l);
-	cubo->textures[2] = dvec2(textL, textL);
 
 	cubo->vertices[3] = dvec3(l, puntocentro, l);
-	cubo->textures[3] = dvec2(textL, puntocentro);
 
 	cubo->vertices[4] = dvec3(l, l, puntocentro);
-	cubo->textures[4] = dvec2(textL, textL);
 
 	cubo->vertices[5] = dvec3(l, puntocentro, puntocentro);
-	cubo->textures[5] = dvec2(textL, puntocentro);
 
 	cubo->vertices[6] = dvec3(puntocentro, l, puntocentro);
-	cubo->textures[6] = dvec2(puntocentro, textL);
 
 	cubo->vertices[7] = dvec3(puntocentro, puntocentro, puntocentro);
-	cubo->textures[7] = dvec2(puntocentro, puntocentro);
 
 	cubo->vertices[8] = dvec3(puntocentro, l, l);
-	cubo->textures[8] = dvec2(puntocentro, textL);
 
 	cubo->vertices[9] = dvec3(puntocentro, puntocentro, l);
-	cubo->textures[9] = dvec2(puntocentro, puntocentro);
+
+	cubo->textures[0] = dvec2(0, 1);
+	cubo->textures[1] = dvec2(0, 0);
+
+	cubo->textures[2] = dvec2(1, 1);
+	cubo->textures[3] = dvec2(1, 0);
+
+	cubo->textures[4] = dvec2(2, 1);
+	cubo->textures[5] = dvec2(2, 0);
+
+	cubo->textures[6] = dvec2(3, 1);
+	cubo->textures[7] = dvec2(3, 0);
+
+	cubo->textures[8] = dvec2(4, 1);
+	cubo->textures[9] = dvec2(4, 0);
 	return cubo;
 }
+
 
