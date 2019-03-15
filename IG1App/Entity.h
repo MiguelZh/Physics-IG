@@ -29,6 +29,7 @@ protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
 	glm::dmat4 modelMat;    // modeling matrix
+	glm::dmat4 auxMat;
 	double angulo = 0, angulo2 = 0;
 	Texture texture, texture1; // w, h, id 
 	// transfers modelViewMat to the GPU
@@ -141,6 +142,15 @@ class Planta : public Entity {
 public:
 	Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	~Planta();
+	virtual void render(Camera const& cam);
+	void update();
+};
+class piramide : public Entity {
+private:
+	double lado;
+public:
+	piramide(GLdouble l, GLdouble h);
+	~piramide();
 	virtual void render(Camera const& cam);
 	void update();
 };

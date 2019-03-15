@@ -265,7 +265,6 @@ void Estrella3DTex::render(Camera const & cam)
 {
 	if (mesh != nullptr) {
 		texture.bind();
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glLineWidth(2);
 		uploadMvM(cam.getViewMat());
 		mesh->render();
@@ -386,7 +385,6 @@ Planta::Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
 {
 	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
 	texture.load("..\\Bmps\\grass.bmp");
-	repetitions = (rw > 0) ? rw : 1;
 }
 
 Planta::~Planta()
@@ -415,5 +413,40 @@ void Planta::render(Camera const & cam)
 }
 
 void Planta::update()
+{
+}
+
+piramide::piramide(GLdouble l, GLdouble h)
+{
+	mesh = Mesh::bipiramideExam(l, h);
+	lado = l;
+	auxMat = translate(modelMat,dvec3(-l/2,0,-l/2));
+}
+
+piramide::~piramide()
+{
+	delete mesh; mesh = nullptr;
+}
+
+void piramide::render(Camera const & cam)
+{
+	modelMat = auxMat; //para que no se desplace 
+	dmat4 aux = modelMat;
+	aux = translate(modelMat, dvec3(lado, 0, 0));
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glLineWidth(2);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mesh->render();
+		modelMat = rotate(aux, radians(180.0), dvec3(0, 0, 1));
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+		aux = translate(modelMat, dvec3(-lado, 0, 0));
+		modelMat = rotate(aux, radians(-180.0), dvec3(0, 0, 1));
+		glDisable(GL_LINE);
+	}
+}
+
+void piramide::update()
 {
 }

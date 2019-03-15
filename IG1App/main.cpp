@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
 
   // after creating the context
   camera.set2D(); 
-  scene.init();     
+  //scene.init();   
+  scene.initExam();
   glutMainLoop(); 
     
   //cin.ignore(INT_MAX, '\n');  cin.get();  

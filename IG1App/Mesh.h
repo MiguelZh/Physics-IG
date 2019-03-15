@@ -23,6 +23,7 @@ public:
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h);
 	static Mesh* generaCajaTexCor(GLdouble l);
+	static Mesh* bipiramideExam(GLdouble l, GLdouble h);
  
 	Mesh(void) { };
 	~Mesh(void);

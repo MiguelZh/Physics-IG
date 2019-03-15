@@ -1,0 +1,7 @@
+Miguel Zhefan Ye Ye
+
+Las parte opcional realizada es la de la captura de pantalla, la planta no la he conseguido hacer 
+a tiempo.
+Pasa algo bastante raro, puede que haya algo en mi proyecto que lo produzca, y es que de vez en
+cuando se produce un breakpoint, casi siempre en el "glutmainloop" pero a veces en otros sitios
+que yo desconozco.

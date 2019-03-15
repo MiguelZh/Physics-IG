@@ -43,6 +43,19 @@ void Scene::init2()
 	grObjects.push_back(new Rectangulo(200, 250, 0));
 	grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(130.), dvec3(1, 1, 0)));
 }
+void Scene::initExam()
+{
+	glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
+	glEnable(GL_DEPTH_TEST);  // enable Depth test 
+	glEnable(GL_TEXTURE_2D);
+
+	grObjects.push_back(new EjesRGB(50));
+	grObjects.push_back(new piramide(20,20));
+	//grObjects.push_back(new Rectangulo(100, 100, -20)); // rect sin textura
+	grObjects.push_back(new RectangleTex(150, 150, 10, 10));
+	grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.), dvec3(1, 0, 0)));
+	grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-80, -80, 20)));
+}
 void Scene::cleangameObjects()
 {
 	//eliminar el objecto y hacer que apunte a null
