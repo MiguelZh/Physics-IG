@@ -147,7 +147,8 @@ public:
 };
 class piramide : public Entity {
 private:
-	double lado;
+	double lado,altura,alturaActual,angulo;
+	bool subiendo;
 public:
 	piramide(GLdouble l, GLdouble h);
 	~piramide();

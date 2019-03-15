@@ -336,7 +336,6 @@ Mesh * Mesh::generaCajaTexCor(GLdouble l)
 Mesh * Mesh::bipiramideExam(GLdouble l, GLdouble h)
 {
 	double mitadL = l / 2; // valido para eje x, z; ya que la altura la suponemos como eje y
-	double mitadH = h / 2;
 	Mesh * m = new Mesh();
 	m->primitive = GL_TRIANGLES;
 	m->numVertices = 12;
@@ -359,21 +358,36 @@ Mesh * Mesh::bipiramideExam(GLdouble l, GLdouble h)
 	m->vertices[9] = dvec3(l, 0, l);
 	m->vertices[10] = dvec3(l, 0, 0);
 	m->vertices[11] = dvec3(mitadL, h, mitadL);
+
 	//texturas
-	m->textures[0]
+	double textL = mitadL;
+	double mitadH = h / 2;
+	m->textures[0] = dvec2(0, 0);
+	m->textures[1] = dvec2(textL, 0);
+	m->textures[2] = dvec2(mitadL, mitadH);
+	m->textures[3] = dvec2(0, 0);
+	m->textures[4] = dvec2(0, 0);
+	m->textures[5] = dvec2(mitadL, mitadH);
+	m->textures[6] = dvec2(textL, 0);
+	m->textures[7] = dvec2(0, 0);
+	m->textures[8] = dvec2(mitadL, mitadH);
+	m->textures[9] = dvec2(textL, 0);
+	m->textures[10] = dvec2(textL, 0);
+	m->textures[11] = dvec2(mitadL, mitadH);
+
 	//colores aleatorios
 	m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0);
-	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0);
-	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0);
-	m->colors[3] = dvec4(1.0, 0.0, 0.0, 1.0);
+	m->colors[1] = dvec4(1.0, 0.0, 0.0, 1.0);
+	m->colors[2] = dvec4(1.0, 0.0, 0.0, 1.0);
+	m->colors[3] = dvec4(0.0, 1.0, 0.0, 1.0);
 	m->colors[4] = dvec4(0.0, 1.0, 0.0, 1.0);
-	m->colors[5] = dvec4(1.0, 0.0, 0.0, 1.0);
-	m->colors[6] = dvec4(0.0, 1.0, 0.0, 1.0);
-	m->colors[7] = dvec4(1.0, 0.0, 0.0, 1.0);
-	m->colors[8] = dvec4(0.0, 1.0, 0.0, 1.0);
-	m->colors[9] = dvec4(0.0, 0.0, 1.0, 1.0);
-	m->colors[10] = dvec4(0.0, 0.0, 1.0, 1.0);
-	m->colors[11] = dvec4(0.0, 0.0, 1.0, 1.0);
+	m->colors[5] = dvec4(0.0, 1.0, 0.0, 1.0);
+	m->colors[6] = dvec4(0.0, 0.0, 1.0, 1.0);
+	m->colors[7] = dvec4(0.0, 0.0, 1.0, 1.0);
+	m->colors[8] = dvec4(0.0, 0.0, 1.0, 1.0);
+	m->colors[9] = dvec4(0.5, 0.5, 0.0, 1.0);
+	m->colors[10] = dvec4(0.5, 0.5, 0.0, 1.0);
+	m->colors[11] = dvec4(0.5, 0.5, 0.0, 1.0);
 	return m;
 }
 

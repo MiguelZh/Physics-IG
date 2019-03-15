@@ -420,7 +420,11 @@ piramide::piramide(GLdouble l, GLdouble h)
 {
 	mesh = Mesh::bipiramideExam(l, h);
 	lado = l;
+	altura = h * 2;
+	alturaActual = 0;
+	subiendo = true;
 	auxMat = translate(modelMat,dvec3(-l/2,0,-l/2));
+	texture.load("..\\Bmps\\sierpinski.bmp",100);
 }
 
 piramide::~piramide()
@@ -436,17 +440,40 @@ void piramide::render(Camera const & cam)
 	if (mesh != nullptr) {
 		uploadMvM(cam.getViewMat());
 		glLineWidth(2);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthMask(GL_FALSE);
+		texture.bind();
 		mesh->render();
+		texture.unbind();
 		modelMat = rotate(aux, radians(180.0), dvec3(0, 0, 1));
 		uploadMvM(cam.getViewMat());
 		mesh->render();
 		aux = translate(modelMat, dvec3(-lado, 0, 0));
 		modelMat = rotate(aux, radians(-180.0), dvec3(0, 0, 1));
 		glDisable(GL_LINE);
+		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
 	}
 }
 
 void piramide::update()
 {
+	angulo += 2;
+	auxMat = rotate(auxMat, radians(5.), dvec3(1, 1, 0));
+	if (alturaActual > altura || (alturaActual-0.5 < -1)) 
+	{
+		subiendo = !subiendo;
+	}
+	if (subiendo)
+	{
+		alturaActual += 0.5;
+		auxMat = translate(auxMat, dvec3(0, 0.5, 0));
+	}
+	else if (!subiendo)
+	{
+		alturaActual -= 0.5;
+		auxMat = translate(auxMat, dvec3(0, -0.5, 0));
+	}
+
 }
