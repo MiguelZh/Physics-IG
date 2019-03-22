@@ -22,6 +22,9 @@ Viewport viewPort(800, 600);
 // Camera position, view volume and projection
 Camera camera(&viewPort);    
 
+glm::dvec2 mCoord; // coordenadas del ratón
+int mBot; // boton pulsado
+
 // Graphics objects of the scene
 Scene scene;   
 
@@ -32,6 +35,9 @@ void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
 void update();
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
+void mouseWheel(int n, int d,int x, int y);
 
 //-------------------------------------------------------------------------
 GLuint last_update_tick; bool stopAnim = false;
@@ -45,7 +51,6 @@ int main(int argc, char *argv[])
   glutInitContextVersion(3, 3);
   glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
   glutInitContextFlags(GLUT_DEBUG);   // GLUT_FORWARD_COMPATIBLE
- 
   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS); 
   
   glutInitWindowSize(800, 600);   // window size
@@ -61,20 +66,71 @@ int main(int argc, char *argv[])
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
   glutIdleFunc(update);
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
+  glutMouseWheelFunc(mouseWheel);
  
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
 
   // after creating the context
   camera.set2D(); 
-  //scene.init();   
-  scene.initExam();
+  scene.init();   
+  //scene.initExam();
   glutMainLoop(); 
     
   //cin.ignore(INT_MAX, '\n');  cin.get();  
   glutDestroyWindow(win);  // Destroy the context 
  
   return 0;
+}
+void mouse(int button, int state, int x, int y) {
+	// state indica si el botón se ha presionado o soltado:
+	//state = GLUT_UP / GLUT_DOWN;
+	// button es el botón que se ha presionado o soltado:
+	//button = GLUT_LEFT / GLUT_RIGHT_BUTTON;
+	// (x, y) es la posición del ratón en la ventana,
+	// siendo (0,0) la esquina (left, top)
+	mCoord = glm::dvec2(x, glutGet(GLUT_WINDOW_HEIGHT) - y); // Guardamos las coordenadas del mouse 
+	mBot = button; // Guardamos el botón del mouse en una var. global
+
+	
+}
+void motion(int x, int y) {
+	if (mBot == GLUT_LEFT_BUTTON) {
+		glm::dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
+		mCoord = glm::dvec2(x, y); // Guardamos la posición actual
+		mp = (mCoord - mp); // desplazamiento realizado
+		camera.orbit(mp.x , mp.y); // sensitivity = 0.05
+		glutPostRedisplay();
+	}
+	else if (mBot == GLUT_RIGHT_BUTTON) {
+		glm::dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
+		mCoord = glm::dvec2(x, y); // Guardamos la posición actual
+		mp = (mCoord - mp); // desplazamiento realizado
+		camera.moveLR(mp.x);
+		camera.moveUD(mp.y);
+		glutPostRedisplay();
+	}
+}
+void mouseWheel(int n, int d, int x, int y) {
+	int m = glutGetModifiers();
+	if (m == 0) // ninguna está presionada
+	{
+		// direction es la dirección de la rueda (+1 / -1)
+		if (d == 1) camera.moveUD(-10);
+		else camera.moveUD(10);	
+		glutPostRedisplay();
+
+	}
+	else if (GLUT_ACTIVE_CTRL) {
+		if (d == 1) {
+			camera.moveFB(30);
+		}
+		else { camera.moveFB(-30); }
+		glutPostRedisplay();
+
+	}
 }
 //-------------------------------------------------------------------------
 
@@ -135,6 +191,9 @@ void key(unsigned char key, int x, int y)
 	break;
   case 'o':
 	camera.set2D();
+  case'p':
+	  camera.changePrj();
+	  break;
 	break;
   default:
 	need_redisplay = false;
@@ -173,7 +232,6 @@ void specialKey(int key, int x, int y)
 }
 //-------------------------------------------------------------------------
 void update() {
-	
 	if (!stopAnim) {
 		GLuint current_time = glutGet(GLUT_ELAPSED_TIME);
 		if (current_time > last_update_tick + 50) {
@@ -183,3 +241,4 @@ void update() {
 		}
 	}
 }
+

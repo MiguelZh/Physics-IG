@@ -5,6 +5,7 @@
 #include <GL/freeglut.h>
 #include <glm.hpp>
 
+
 #include "Viewport.h"
 //-------------------------------------------------------------------------
 
@@ -22,7 +23,15 @@ public:
 
 	void set2D();  // eye(0,0,500), look(0,0,0), up(0, 1, 0)
 	void set3D();  // eye(500,500,500), look(0,10,0), up(0, 1, 0)
-    
+	void setAxes();
+	void setVM();
+	void moveUD(GLdouble cs);
+	void moveLR(GLdouble cs);
+	void moveFB(GLdouble cs);
+	void changePrj();
+
+	void orbit(GLdouble incAng, GLdouble incY); // modifica la posición de la cámara 
+
 	void pitch(GLdouble a); // rotates a degrees on the X axis
 	void yaw(GLdouble a);   // rotates a degrees on the Y axis
 	void roll(GLdouble a);  // rotates a degrees on the Z axis
@@ -47,6 +56,12 @@ protected:
 	GLdouble nearVal = 1, farVal = 10000;  // view volume
 	GLdouble factScale = 1;
 	
+	glm::dvec3 eye, look, up; // para generar la matriz de vista con lookAt
+	glm::dvec3 right, upward, front; // para los ejes right=u, upward=v, front=-n
+	GLdouble ang; 
+	GLdouble radio = 1000;
+	bool orto;
+
 	Viewport* vp;
 };
 
