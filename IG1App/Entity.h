@@ -1,158 +1,153 @@
-//#pragma once
-#ifndef _H_Entities_H_
-#define _H_Entities_H_
-
+#pragma once
 #include <GL/freeglut.h>
 #include <glm.hpp>
 
 #include "Camera.h"
 #include "Mesh.h"
-#include"Texture.h"
+#include "Texture.h"
 
 //-------------------------------------------------------------------------
 
-class Entity 
-{
-public:
-	Entity() : modelMat(1.0) { }; 
-	virtual ~Entity() { };
+class Entity {
+ public:
+  Entity() : modelMat(1.0), auxMat(1.0){};
+  virtual ~Entity() = default;
 
-	virtual void render(Camera const& cam) = 0;
-	virtual void update() = 0;
+  virtual void render(Camera const& cam) = 0;
+  virtual void update() = 0;
 
-	// modeling matrix
-	glm::dmat4 const& getModelMat() const { return modelMat; };
-	GLint repetitions = 1;
-	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
-  
-protected:
+  // modeling matrix
+  glm::dmat4 const& getModelMat() const { return modelMat; };
+  GLint repetitions = 1;
+  void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
 
-	Mesh* mesh = nullptr;   // surface mesh
-	glm::dmat4 modelMat;    // modeling matrix
-	glm::dmat4 auxMat;
-	double angulo = 0, angulo2 = 0;
-	Texture texture, texture1; // w, h, id 
-	// transfers modelViewMat to the GPU
-	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
+ protected:
+  Mesh* mesh = nullptr;  // surface mesh
+  glm::dmat4 modelMat;   // modeling matrix
+  glm::dmat4 auxMat;
+  double angulo = 0, angulo2 = 0;
+  Texture texture, texture1;  // w, h, id
+  // transfers modelViewMat to the GPU
+  virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
 };
 
 //-------------------------------------------------------------------------
 
-class EjesRGB : public Entity 
-{
-public:
-	EjesRGB(GLdouble l);
-	~EjesRGB();
-	virtual void render(Camera const& cam); 
-	void update();
+class EjesRGB final : public Entity {
+ public:
+  EjesRGB(GLdouble l);
+  ~EjesRGB();
+  void render(Camera const& cam) override;
+  void update() override;
 };
 
 //-------------------------------------------------------------------------
 
-class Poliespiral : public Entity {
-public:
-	Poliespiral(glm::dvec2 verIni, GLdouble angIni, GLdouble
-		incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
-	~Poliespiral();
-	virtual void render(Camera const& cam);
-	void update();
+class Poliespiral final : public Entity {
+ public:
+  Poliespiral(glm::dvec2 verIni, GLdouble angIni, GLdouble incrAng,
+              GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
+  ~Poliespiral();
+  void render(Camera const& cam) override;
+  void update() override;
 };
 //-------------------------------------------------------------------------
-class Dragon : public Entity {
-public:
-	Dragon(GLuint numVert);
-	~Dragon();
-	virtual void render(Camera const& cam);
-	void update();
+class Dragon final : public Entity {
+ public:
+  Dragon(GLuint numVert);
+  ~Dragon();
+  void render(Camera const& cam) override;
+  void update() override;
 };
 //-------------------------------------------------------------------------
 class Triangle : public Entity {
-public:
-	Triangle(GLdouble numVert);
-	~Triangle();
-	virtual void render(Camera const& cam);
-	void update();
+ public:
+  Triangle(GLdouble numVert);
+  ~Triangle();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class TrianguloAnimado : public Triangle {
-private:
-	glm::dmat4 aux = modelMat;
-public:
-	TrianguloAnimado(GLdouble numVert);
-	~TrianguloAnimado();
-	void update();
+class TrianguloAnimado final : public Triangle {
+  glm::dmat4 aux_ = modelMat;
+
+ public:
+  TrianguloAnimado(GLdouble numVert);
+  ~TrianguloAnimado();
+  void update() override;
 };
 //-------------------------------------------------------------------------
-class Rectangulo : public Entity {
-public:
-	Rectangulo(GLdouble w, GLdouble h,int ejeZ);
-	~Rectangulo();
-	virtual void render(Camera const& cam);
-	void update();
+class Rectangulo final : public Entity {
+ public:
+  Rectangulo(GLdouble w, GLdouble h, int ejeZ);
+  ~Rectangulo();
+  void render(Camera const& cam) override;
+  void update() override;
 };
+
 class Estrella3D : public Entity {
-public:
-	Estrella3D(GLdouble re, GLdouble np, GLdouble h);
-	~Estrella3D();
-	virtual void render(Camera const& cam);
-	void update();
+ public:
+  Estrella3D(GLdouble re, GLdouble np, GLdouble h);
+  ~Estrella3D();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class Caja : public Entity {
-public:
-	Caja(GLdouble l);
-	~Caja();
-	virtual void render(Camera const& cam);
-	void update();
+
+class Caja final : public Entity {
+ public:
+  Caja(GLdouble l);
+  ~Caja();
+  void render(Camera const& cam) override;
+  void update() override;
 };
 class RectangleTex : public Entity {
-public:
-	RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
-	~RectangleTex();
-	virtual void render(Camera const& cam);
-	void update();
+ public:
+  RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+  ~RectangleTex();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class Estrella3DTex : public Entity {
-public:
-	Estrella3DTex(GLdouble r, GLdouble nL, GLdouble h);
-	~Estrella3DTex();
-	virtual void render(Camera const& cam);
-	void update();
+class Estrella3DTex final : public Entity {
+ public:
+  Estrella3DTex(GLdouble r, GLdouble nL, GLdouble h);
+  ~Estrella3DTex();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class CuboTex : public Entity {
-public:
-	CuboTex(GLdouble l);
-	~CuboTex();
-	virtual void render(Camera const& cam);
-	void update();
+class CuboTex final : public Entity {
+ public:
+  CuboTex(GLdouble l);
+  ~CuboTex();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class Cristalera : public Entity {
-public:
-	Cristalera(GLdouble l);
-	~Cristalera();
-	virtual void render(Camera const& cam);
-	void update();
+class Cristalera final : public Entity {
+ public:
+  Cristalera(GLdouble l);
+  ~Cristalera();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class Foto : public Entity {
-public:
-	Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
-	~Foto();
-	virtual void render(Camera const& cam);
-	void update();
+class Foto final : public Entity {
+ public:
+  Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+  ~Foto();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class Planta : public Entity {
-public:
-	Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
-	~Planta();
-	virtual void render(Camera const& cam);
-	void update();
+class Planta final : public Entity {
+ public:
+  Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+  ~Planta();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-class piramide : public Entity {
-private:
-	double lado,altura,alturaActual,angulo;
-	bool subiendo;
-public:
-	piramide(GLdouble l, GLdouble h);
-	~piramide();
-	virtual void render(Camera const& cam);
-	void update();
+class Piramide final : public Entity {
+  double lado, altura, alturaActual, angulo;
+  bool subiendo;
+
+ public:
+  Piramide(GLdouble l, GLdouble h);
+  ~Piramide();
+  void render(Camera const& cam) override;
+  void update() override;
 };
-#endif //_H_Entities_H_

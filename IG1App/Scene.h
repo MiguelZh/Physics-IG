@@ -1,36 +1,21 @@
-//#pragma once
-#ifndef _H_Scene_H_
-#define _H_Scene_H_
-
-#include <GL/freeglut.h>
-#include <glm.hpp>
-
+#pragma once
+#include <vector>
 #include "Camera.h"
 #include "Entity.h"
-//#include "Mesh.h"
-
-#include <vector>
 
 //-------------------------------------------------------------------------
 
-class Scene	
-{ 
-public:
-    Scene() { };
-	~Scene();
-    void init(); 
-	void init2();
-	void initExam();
-	void cleangameObjects();
-    void render(Camera const& cam);
-	void update();
-	  
-protected:
-	
-	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
+class Scene {
+ public:
+  Scene(){};
+  ~Scene();
+  void init();
+  void init2();
+  void initExam();
+  void cleangameObjects();
+  void render(Camera const& cam);
+  void update();
+
+ protected:
+  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
 };
-
-//-------------------------------------------------------------------------
-
-#endif //_H_Scene_H_
-

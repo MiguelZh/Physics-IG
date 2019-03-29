@@ -1,101 +1,90 @@
-//---------------------------------------------------------------------------
-// 
-//---------------------------------------------------------------------------
-#ifndef _H_PixMap32RGBA_H
-#define _H_PixMap32RGBA_H
-
+#pragma once
 //#include <Windows.h>
 //#include <gl/GL.h>
 #include <GL/freeglut.h>
 #include <string>
 
-class PixMap32RGBA {   
-public:
-	
-   struct rgba_color
-   {
-     GLubyte r,g,b,a;
-   };
-   
-private:
-   rgba_color * data_;
-   GLsizei   width_;
-   GLsizei   height_;
- 
-public:
+class PixMap32RGBA {
+ public:
+  struct rgba_color {
+    GLubyte r, g, b, a;
+  };
 
-   PixMap32RGBA()  // noexcept  
-   : data_(nullptr), width_(0), height_(0) {}
+ private:
+  rgba_color* data_;
+  GLsizei width_;
+  GLsizei height_;
 
-   PixMap32RGBA(const std::string& filename) // throw(std::ios_base::failure, std::bad_alloc)
-   : data_(nullptr), width_(0), height_(0)
-   {
-      load_bmp24BGR(filename);
-   }
+ public:
+  PixMap32RGBA()  // noexcept
+      : data_(nullptr), width_(0), height_(0) {}
 
-   ~PixMap32RGBA() 
-   {
-      free();
-   }
-   
-   GLsizei width() const // noexcept
-   {
-      return width_;
-   }
+  PixMap32RGBA(const std::string&
+                   filename)  // throw(std::ios_base::failure, std::bad_alloc)
+      : data_(nullptr), width_(0), height_(0) {
+    load_bmp24BGR(filename);
+  }
 
-   GLsizei height() const // noexcept
-   {
-      return height_;
-   }
+  ~PixMap32RGBA() { free(); }
 
-   const rgba_color* data() const // noexcept
-   { 
-      return data_;
-   }
+  GLsizei width() const  // noexcept
+  {
+    return width_;
+  }
 
-   rgba_color* data() // noexcept
-   {
-	   return data_;
-   }
+  GLsizei height() const  // noexcept
+  {
+    return height_;
+  }
 
-   bool is_null() const // noexcept
-   {
-      return (data_  == nullptr); 
-   }
+  const rgba_color* data() const  // noexcept
+  {
+    return data_;
+  }
 
-   void load_bmp24BGR(const std::string & file_name); // throw(std::ios_base::failure, std::exception);
+  rgba_color* data()  // noexcept
+  {
+    return data_;
+  }
 
-   void save_bmp24BGR(const std::string & file_name) const;  // throw(std::ios_base::failure);
+  bool is_null() const  // noexcept
+  {
+    return (data_ == nullptr);
+  }
 
-   void set_alpha(GLubyte alpha = 255);  // throw(std::bad_alloc)   
-   void set_colorkey_alpha(rgba_color colorKey, GLubyte alpha = 255);  // throw(std::bad_alloc)   
+  void load_bmp24BGR(
+      const std::string& file_name);  // throw(std::ios_base::failure,
+                                      // std::exception);
 
-   void create_pixmap(GLsizei   width, GLsizei   height); // throw(std::bad_alloc);
-   void free();  // noexcept;
+  void save_bmp24BGR(
+      const std::string& file_name) const;  // throw(std::ios_base::failure);
 
-protected:
+  void set_alpha(GLubyte alpha = 255);  // throw(std::bad_alloc)
+  void set_colorkey_alpha(rgba_color colorKey,
+                          GLubyte alpha = 255);  // throw(std::bad_alloc)
 
-   PixMap32RGBA(const unsigned int width, const unsigned int height); // throw(std::bad_alloc)
-   PixMap32RGBA(const PixMap32RGBA & pixmap); // throw(std::exception)
-   PixMap32RGBA & operator=(const PixMap32RGBA & pixmap); // throw(std::exception)
+  void create_pixmap(GLsizei width, GLsizei height);  // throw(std::bad_alloc);
+  void free();                                        // noexcept;
 
-   void load_headers(std::ifstream & stream,  unsigned int & width, unsigned int & height) const; // throw(std::ios_base::failure);
-   void save_headers(std::ofstream & stream) const; // noexcept;
+ protected:
+  PixMap32RGBA(const unsigned int width,
+               const unsigned int height);              // throw(std::bad_alloc)
+  PixMap32RGBA(const PixMap32RGBA& pixmap);             // throw(std::exception)
+  PixMap32RGBA& operator=(const PixMap32RGBA& pixmap);  // throw(std::exception)
 
-   void row_bgr_rgba(char* rowAux, unsigned int r); // noexcept;
-   void row_rgba_bgr(char* rowAux, unsigned int r) const; // noexcept;
+  void load_headers(
+      std::ifstream& stream, unsigned int& width,
+      unsigned int& height) const;  // throw(std::ios_base::failure);
+  void save_headers(std::ofstream& stream) const;  // noexcept;
 
-   void get_pixel(const GLsizei x, const GLsizei y, rgba_color & rgba) const
-   {
-     rgba = data_[y * width_ + x];
-   }
+  void row_bgr_rgba(char* rowAux, unsigned int r);        // noexcept;
+  void row_rgba_bgr(char* rowAux, unsigned int r) const;  // noexcept;
 
-   void set_pixel(const GLsizei x, const GLsizei y, const rgba_color & rgba)
-   {
-     data_[y * width_ + x] = rgba;
-   }
+  void get_pixel(const GLsizei x, const GLsizei y, rgba_color& rgba) const {
+    rgba = data_[y * width_ + x];
+  }
 
+  void set_pixel(const GLsizei x, const GLsizei y, const rgba_color& rgba) {
+    data_[y * width_ + x] = rgba;
+  }
 };
-
-   
-#endif
