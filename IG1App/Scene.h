@@ -5,17 +5,21 @@
 
 //-------------------------------------------------------------------------
 
-class Scene {
+class Scene final {
+  void clearObjects();
+
  public:
-  Scene(){};
+  Scene();
   ~Scene();
-  void init();
-  void init2();
-  void initExam();
-  void cleangameObjects();
+  static void init();
+
+  void scene2D();
+  void scene3D();
+  void sceneExam();
+
   void render(Camera const& cam);
   void update();
 
  protected:
-  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
+  std::vector<Entity*> grObjects_;  // Entities (graphics objects) of the scene
 };

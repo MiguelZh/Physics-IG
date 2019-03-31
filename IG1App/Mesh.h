@@ -7,7 +7,7 @@
 
 //-------------------------------------------------------------------------
 
-class Mesh {
+class Mesh final {
  public:
   static Mesh* createRGBAxes(GLdouble l);  // creates a new 3D RGB axes mesh
   static Mesh* generaPoliespiral(glm::dvec2 verIni, GLdouble angIni,
@@ -26,12 +26,12 @@ class Mesh {
   static Mesh* generaCajaTexCor(GLdouble l);
   static Mesh* bipiramideExam(GLdouble l, GLdouble h);
 
-  Mesh(void){};
-  ~Mesh(void);
-  virtual void render();
+  Mesh() = default;
+  ~Mesh();
+  void render() const;
 
-  glm::dvec3* getVertices() { return vertices; };  // vertex array
-  glm::dvec4* getColors() { return colors; };      // color array
+  glm::dvec3* getVertices() const { return vertices; };  // vertex array
+  glm::dvec4* getColors() const { return colors; };      // color array
 
  protected:
   GLuint numVertices = 0;           // arrays size (number of elements)

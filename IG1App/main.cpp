@@ -1,9 +1,11 @@
-﻿//#include <Windows.h>
-//#include <gl/GL.h>    // OpenGL
-//#include <gl/GLU.h>   // OpenGL Utility Library
-//#include <GL/glut.h>  // OpenGL Utility Toolkit
+﻿#include <GL/glut.h>  // OpenGL Utility Toolkit
+#include <Windows.h>
+#include <gl/GL.h>   // OpenGL
+#include <gl/GLU.h>  // OpenGL Utility Library
 
 #include <GL/freeglut.h>  // Free OpenGL Utility Toolkit for creating windows, initializing OpenGL contexts, and handling input events
+#include <GL/freeglut_ext.h>
+#include <GL/freeglut_std.h>
 #include <glm.hpp>  // OpenGL Mathematics. A C++ mathematics library for graphics programming
 
 #include "Camera.h"
@@ -41,14 +43,15 @@ void motion(int x, int y);
 void mouseWheel(int n, int d, int x, int y);
 
 //-------------------------------------------------------------------------
-GLuint last_update_tick;
+GLuint lastUpdateTick;
 bool stopAnim = false;
-bool init1 = true;
+
 int main(int argc, char *argv[]) {
   cout << "Starting console..." << '\n';
 
   // Initialization
   glutInit(&argc, argv);
+
   glutInitContextVersion(3, 3);
   glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
   glutInitContextFlags(GLUT_DEBUG);  // GLUT_FORWARD_COMPATIBLE
@@ -62,7 +65,7 @@ int main(int argc, char *argv[]) {
       GLUT_DEPTH /*| GLUT_STENCIL*/);  // RGBA colors, double buffer, depth
                                        // buffer and stencil buffer
 
-  int win = glutCreateWindow("IG1App");  // window's identifier
+  const auto win = glutCreateWindow("IG1App");  // window's identifier
 
   // Callback registration
   glutReshapeFunc(resize);
@@ -77,10 +80,11 @@ int main(int argc, char *argv[]) {
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
 
+  Scene::init();
+
   // after creating the context
   camera.set2D();
-  scene.init();
-  // scene.initExam();
+  scene.scene2D();
   glutMainLoop();
 
   // cin.ignore(INT_MAX, '\n');  cin.get();
@@ -88,54 +92,6 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-void mouse(int button, int state, int x, int y) {
-  // state indica si el botón se ha presionado o soltado:
-  // state = GLUT_UP / GLUT_DOWN;
-  // button es el botón que se ha presionado o soltado:
-  // button = GLUT_LEFT / GLUT_RIGHT_BUTTON;
-  // (x, y) es la posición del ratón en la ventana,
-  // siendo (0,0) la esquina (left, top)
-  mCoord = glm::dvec2(x, glutGet(GLUT_WINDOW_HEIGHT) -
-                             y);  // Guardamos las coordenadas del mouse
-  mBot = button;  // Guardamos el botón del mouse en una var. global
-}
-void motion(int x, int y) {
-  if (mBot == GLUT_LEFT_BUTTON) {
-    glm::dvec2 mp = mCoord;     // guardar la anterior posición en var. temp.
-    mCoord = glm::dvec2(x, y);  // Guardamos la posición actual
-    mp = (mCoord - mp);         // desplazamiento realizado
-    camera.orbit(mp.x * 0.5, mp.y);  // sensitivity = 0.05
-    glutPostRedisplay();
-  } else if (mBot == GLUT_RIGHT_BUTTON) {
-    glm::dvec2 mp = mCoord;     // guardar la anterior posición en var. temp.
-    mCoord = glm::dvec2(x, y);  // Guardamos la posición actual
-    mp = (mCoord - mp);         // desplazamiento realizado
-    camera.moveLR(mp.x);
-    camera.moveUD(mp.y);
-    glutPostRedisplay();
-  }
-}
-void mouseWheel(int n, int d, int x, int y) {
-  int m = glutGetModifiers();
-  if (m == 0)  // ninguna está presionada
-  {
-    // direction es la dirección de la rueda (+1 / -1)
-    if (d == 1)
-      camera.moveUD(-10);
-    else
-      camera.moveUD(10);
-    glutPostRedisplay();
-
-  } else if (GLUT_ACTIVE_CTRL) {
-    if (d == 1) {
-      camera.moveFB(30);
-    } else {
-      camera.moveFB(-30);
-    }
-    glutPostRedisplay();
-  }
-}
-//-------------------------------------------------------------------------
 
 void display()  // double buffering
 {
@@ -145,41 +101,27 @@ void display()  // double buffering
 
   glutSwapBuffers();
 }
-//-------------------------------------------------------------------------
 
-void resize(int newWidth, const int newHeight) {
+void resize(const int newWidth, const int newHeight) {
   // Resize Viewport
   viewPort.uploadSize(newWidth, newHeight);
 
   // Resize Scene Visible Area
   camera.uploadSize(viewPort.getW(), viewPort.getH());  // scale unchanged
 }
-//-------------------------------------------------------------------------
 
-void key(unsigned char key, int x, int y) {
-  bool need_redisplay = true;
+void key(const unsigned char key, int x, int y) {
+  auto needRedisplay = true;
 
   switch (key) {
     case 27:                // Escape key
       glutLeaveMainLoop();  // Freeglut's sentence for stopping glut's main loop
       break;
-    case 51:
-      if (!init1) {
-        scene.init();
-        init1 = !init1;
-      }
-      break;
     case 50:
-      if (init1) {
-        scene.init2();
-        init1 = !init1;
-      }
+      scene.scene2D();
       break;
-    case 'u':
-      stopAnim = !stopAnim;
-      break;
-    case 'f':
-      Texture::save("../Bmps/screenshot.bmp");
+    case 51:
+      scene.scene3D();
       break;
     case '+':
       camera.uploadScale(+0.02);  // zoom in  (increases the scale)
@@ -192,48 +134,101 @@ void key(unsigned char key, int x, int y) {
       break;
     case 'o':
       camera.set2D();
+      break;
+    case 'u':
+      stopAnim = !stopAnim;
+      break;
     case 'p':
       camera.changePrj();
       break;
+    case 'f':
+      // ReSharper disable once StringLiteralTypo
+      Texture::save("../Bmps/screenshot.bmp");
+      break;
     default:
-      need_redisplay = false;
+      needRedisplay = false;
       break;
   }  // switch
 
-  if (need_redisplay) glutPostRedisplay();
+  if (needRedisplay) glutPostRedisplay();
 }
-//-------------------------------------------------------------------------
 
-void specialKey(int key, int x, int y) {
-  bool need_redisplay = true;
+void specialKey(const int key, int x, int y) {
+  auto needRedisplay = true;
 
   switch (key) {
     case GLUT_KEY_RIGHT:
-      camera.pitch(1);  // rotate 1 on the X axis
+      camera.moveLR(1.0);
       break;
     case GLUT_KEY_LEFT:
-      camera.yaw(1);  // rotate 1 on the Y axis
+      camera.moveLR(-1.0);
       break;
     case GLUT_KEY_UP:
-      camera.roll(1);  // rotate 1 on the Z axis
+      camera.moveUD(1.0);
       break;
     case GLUT_KEY_DOWN:
-      camera.roll(-1);  // rotate -1 on the Z axis
+      camera.moveUD(-1.0);
       break;
     default:
-      need_redisplay = false;
+      needRedisplay = false;
       break;
   }  // switch
 
-  if (need_redisplay) glutPostRedisplay();
+  if (needRedisplay) glutPostRedisplay();
 }
-//-------------------------------------------------------------------------
+
+void mouse(const int button, int state, const int x, const int y) {
+  // button is the button from the mouse that has been clicked, it's either
+  // GLUT_LEFT_BUTTON or GLUT_RIGHT_BUTTON. state indicates whether or not the
+  // button was pressed or left, it's either GLUT_UP or GLUT_DOWN.
+  mBot = button;
+  mCoord = glm::dvec2(x, glutGet(GLUT_WINDOW_HEIGHT) - y);
+}
+
+void motion(int x, int y) {
+  if (mBot == GLUT_LEFT_BUTTON) {
+    auto mp = mCoord;           // guardar la anterior posición en var. temp.
+    mCoord = glm::dvec2(x, y);  // Guardamos la posición actual
+    mp = (mCoord - mp);         // desplazamiento realizado
+    camera.orbit(mp.x * 0.5, mp.y);  // sensitivity = 0.05
+    glutPostRedisplay();
+  } else if (mBot == GLUT_RIGHT_BUTTON) {
+    auto mp = mCoord;           // guardar la anterior posición en var. temp.
+    mCoord = glm::dvec2(x, y);  // Guardamos la posición actual
+    mp = mCoord - mp;           // desplazamiento realizado
+    camera.moveLR(-mp.x);
+    camera.moveUD(mp.y);
+    glutPostRedisplay();
+  }
+}
+
+void mouseWheel(int n, const int d, int x, int y) {
+  const auto m = glutGetModifiers();
+  if (m == 0)  // ninguna está presionada
+  {
+    // direction es la dirección de la rueda (+1 / -1)
+    if (d == 1)
+      camera.moveUD(5);
+    else
+      camera.moveUD(-5);
+    glutPostRedisplay();
+
+  } else if (GLUT_ACTIVE_CTRL) {
+    if (d == 1) {
+      camera.moveFB(5);
+    } else {
+      camera.moveFB(-5);
+    }
+    glutPostRedisplay();
+  }
+}
+
 void update() {
   if (!stopAnim) {
-    GLuint current_time = glutGet(GLUT_ELAPSED_TIME);
-    if (current_time > last_update_tick + 50) {
+    const GLuint currentTime = glutGet(GLUT_ELAPSED_TIME);
+    if (currentTime > lastUpdateTick + 50) {
       scene.update();
-      last_update_tick = current_time;
+      lastUpdateTick = currentTime;
       glutPostRedisplay();
     }
   }

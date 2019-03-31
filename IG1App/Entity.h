@@ -10,25 +10,25 @@
 
 class Entity {
  public:
-  Entity() : modelMat(1.0), auxMat(1.0){};
+  Entity() : modelMat_(1.0), auxMat_(1.0){};
   virtual ~Entity() = default;
 
   virtual void render(Camera const& cam) = 0;
   virtual void update() = 0;
 
   // modeling matrix
-  glm::dmat4 const& getModelMat() const { return modelMat; };
+  glm::dmat4 const& getModelMat() const { return modelMat_; };
   GLint repetitions = 1;
-  void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
+  void setModelMat(glm::dmat4 const& aMat) { modelMat_ = aMat; }
 
  protected:
-  Mesh* mesh = nullptr;  // surface mesh
-  glm::dmat4 modelMat;   // modeling matrix
-  glm::dmat4 auxMat;
-  double angulo = 0, angulo2 = 0;
-  Texture texture, texture1;  // w, h, id
+  Mesh* mesh_ = nullptr;  // surface mesh
+  glm::dmat4 modelMat_;   // modeling matrix
+  glm::dmat4 auxMat_;
+  double angle_ = 0, angle2_ = 0;
+  Texture texture_, texture1_;  // w, h, id
   // transfers modelViewMat to the GPU
-  virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
+  void uploadMvM(glm::dmat4 const& modelViewMat) const;
 };
 
 //-------------------------------------------------------------------------
@@ -51,7 +51,7 @@ class Poliespiral final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
-//-------------------------------------------------------------------------
+
 class Dragon final : public Entity {
  public:
   Dragon(GLuint numVert);
@@ -59,7 +59,7 @@ class Dragon final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
-//-------------------------------------------------------------------------
+
 class Triangle : public Entity {
  public:
   Triangle(GLdouble numVert);
@@ -67,15 +67,16 @@ class Triangle : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class TrianguloAnimado final : public Triangle {
-  glm::dmat4 aux_ = modelMat;
+  glm::dmat4 aux_ = modelMat_;
 
  public:
   TrianguloAnimado(GLdouble numVert);
   ~TrianguloAnimado();
   void update() override;
 };
-//-------------------------------------------------------------------------
+
 class Rectangulo final : public Entity {
  public:
   Rectangulo(GLdouble w, GLdouble h, int ejeZ);
@@ -99,13 +100,15 @@ class Caja final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
-class RectangleTex : public Entity {
+
+class RectangleTex final : public Entity {
  public:
   RectangleTex(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
   ~RectangleTex();
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class Estrella3DTex final : public Entity {
  public:
   Estrella3DTex(GLdouble r, GLdouble nL, GLdouble h);
@@ -113,6 +116,7 @@ class Estrella3DTex final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class CuboTex final : public Entity {
  public:
   CuboTex(GLdouble l);
@@ -120,6 +124,7 @@ class CuboTex final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class Cristalera final : public Entity {
  public:
   Cristalera(GLdouble l);
@@ -127,6 +132,7 @@ class Cristalera final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class Foto final : public Entity {
  public:
   Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
@@ -134,6 +140,7 @@ class Foto final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class Planta final : public Entity {
  public:
   Planta(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
@@ -141,6 +148,7 @@ class Planta final : public Entity {
   void render(Camera const& cam) override;
   void update() override;
 };
+
 class Piramide final : public Entity {
   double lado, altura, alturaActual, angulo;
   bool subiendo;
