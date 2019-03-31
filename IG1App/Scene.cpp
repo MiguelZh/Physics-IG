@@ -10,8 +10,8 @@ Scene::Scene() = default;
 Scene::~Scene() { clearObjects(); }
 
 void Scene::init() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_CULL_FACE);
 }
@@ -19,15 +19,18 @@ void Scene::init() {
 void Scene::scene2D() {
   clearObjects();
 
+  grObjects_.push_back(new Estrella3DTex(15., 4., 15.));
+  grObjects_.push_back(new CuboTex(30));
+  grObjects_.back()->setModelMat(
+      translate(grObjects_.back()->getModelMat(), dvec3(15, 30, 0)));
+  grObjects_.push_back(new Rectangulo(10, 10, -20)); // rect without texture
+  grObjects_.back()->setModelMat(
+	  translate(grObjects_.back()->getModelMat(), dvec3(35, 55, 20)));
   grObjects_.push_back(new RectangleTex(200, 200, 4, 4));
   grObjects_.back()->setModelMat(
       rotate(grObjects_.back()->getModelMat(), radians(90.), dvec3(1, 0, 0)));
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(-40, -45, -30)));
-  grObjects_.push_back(new Estrella3DTex(15., 4., 15.));
-  grObjects_.push_back(new CuboTex(30));
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(15, 30, 0)));
   grObjects_.push_back(new Cristalera(200));
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(-40, 30, -45)));
@@ -48,8 +51,8 @@ void Scene::scene3D() {
 }
 
 void Scene::sceneExam() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
 
   grObjects_.push_back(new EjesRGB(50));
@@ -62,7 +65,7 @@ void Scene::sceneExam() {
       translate(grObjects_.back()->getModelMat(), dvec3(-80, -80, 20)));
 }
 
-void Scene::render(Camera const& cam) {
+void Scene::render(Camera const &cam) {
   for (auto el : grObjects_) {
     el->render(cam);
   }
@@ -74,6 +77,7 @@ void Scene::update() {
 }
 
 void Scene::clearObjects() {
-  for (auto el : grObjects_) delete el;
+  for (auto el : grObjects_)
+    delete el;
   grObjects_.clear();
 }
