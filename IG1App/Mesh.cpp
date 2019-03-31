@@ -2,7 +2,8 @@
 
 using namespace glm;
 
-//-------------------------------------------------------------------------
+// ReSharper disable StringLiteralTypo
+// ReSharper disable IdentifierTypo
 
 Mesh::~Mesh() {
   delete[] vertices;
@@ -10,7 +11,6 @@ Mesh::~Mesh() {
   delete[] colors;
   colors = nullptr;
 }
-//-------------------------------------------------------------------------
 
 void Mesh::render() const {
   if (vertices != nullptr) {
@@ -37,7 +37,6 @@ void Mesh::render() const {
     glDisableClientState(GL_COLOR_ARRAY);
   }
 }
-//-------------------------------------------------------------------------
 
 Mesh* Mesh::createRGBAxes(const GLdouble l) {
   const auto m = new Mesh();
@@ -68,7 +67,7 @@ Mesh* Mesh::createRGBAxes(const GLdouble l) {
 
   return m;
 }
-//-------------------------------------------------------------------------
+
 Mesh* Mesh::generaPoliespiral(const dvec2 verIni, const GLdouble angIni,
                               const GLdouble incrAng, const GLdouble ladoIni,
                               const GLdouble incrLado, const GLuint numVert) {
@@ -79,7 +78,7 @@ Mesh* Mesh::generaPoliespiral(const dvec2 verIni, const GLdouble angIni,
   auto length = ladoIni, angle = angIni;
   auto x = verIni.x;
   auto y = verIni.y;
-  for (auto i = 0; i < poliespiral->numVertices; i++) {
+  for (GLuint i = 0; i < poliespiral->numVertices; i++) {
     poliespiral->vertices[i] = dvec3(x, y, 0.0);
     x += length * cos(radians(angle));  // cos(radians(90))
     y += length * sin(radians(angle));
@@ -95,12 +94,11 @@ Mesh* Mesh::generaDragon(const GLuint numVert) {
   dragon->numVertices = numVert;
   dragon->vertices = new dvec3[dragon->numVertices];
   double x = 0, y = 0;
-  auto auxX = x, auxY = y;
   const auto pr1 = 0.787473;
   for (GLuint i = 0; i < dragon->numVertices; i++) {
     dragon->vertices[i] = dvec3(x, y, 0.0);
-    auxX = x;
-    auxY = y;
+    const auto auxX = x;
+    const auto auxY = y;
     if (rand() / double(RAND_MAX) < pr1) {
       x = 0.824074 * auxX + 0.281482 * auxY - 0.882290;
       y = -0.212346 * auxX + 0.864198 * auxY - 0.110607;
@@ -118,7 +116,7 @@ Mesh* Mesh::generaTriangulo(const GLdouble r) {
   triangulo->numVertices = 3;
   triangulo->vertices = new dvec3[triangulo->numVertices];
   const auto incrAng = 360.0 / 4.0;
-  for (auto i = 0; i < triangulo->numVertices; i++) {
+  for (GLuint i = 0; i < triangulo->numVertices; i++) {
     const auto x = 0 + r * cos(90 + incrAng * i);
     const auto y = 0 + r * sin(90 + incrAng * i);
     triangulo->vertices[i] = dvec3(x, y, 0.0);
@@ -163,15 +161,15 @@ Mesh* Mesh::generaEstrella3D(const GLdouble re, const GLdouble np,
                              const GLdouble h) {
   const auto estrella3D = new Mesh();
   estrella3D->primitive = GL_TRIANGLE_FAN;
-  estrella3D->numVertices = 2 * np + 2;
+  estrella3D->numVertices = static_cast<GLuint>(floor(2 * np + 2));
   estrella3D->vertices = new dvec3[estrella3D->numVertices];
   estrella3D->colors = new dvec4[estrella3D->numVertices];
   const dvec3 vo = {0, 0, 0};
   const auto ri = re / 2;
-  double x = 0, y = 0;
+  double x, y;
   const double angle = 0;
   const auto incrAng = 360 / np / 2;
-  for (auto i = 0; i < estrella3D->numVertices; i++) {
+  for (GLuint i = 0; i < estrella3D->numVertices; i++) {
     if (i == 0) {
       estrella3D->vertices[i] = vo;
     } else if (i % 2 == 0) {
@@ -243,13 +241,13 @@ Mesh* Mesh::generaEstrellaTexCor(const GLdouble r, const GLdouble nL,
                                  const GLdouble h) {
   const auto estrella3D = new Mesh();
   estrella3D->primitive = GL_TRIANGLE_FAN;
-  estrella3D->numVertices = 2 * nL + 2;
+  estrella3D->numVertices = static_cast<GLuint>(floor(2 * nL + 2));
   estrella3D->vertices = new dvec3[estrella3D->numVertices];
   estrella3D->colors = new dvec4[estrella3D->numVertices];
   estrella3D->textures = new dvec2[estrella3D->numVertices];
   const dvec3 vo = {0, 0, 0};
   const auto ri = r / 2.0;
-  double x = 0, y = 0;
+  double x, y;
   const auto angle = 0.0;
   const auto incrAng = 360.0 / nL / 2.0;
   for (GLuint i = 0; i < estrella3D->numVertices; i++) {

@@ -1,22 +1,21 @@
 #pragma once
 #include "Pixmap32RGBA.h"
 
-class Texture  // utiliza la clase PixMap32RGBA para el método load
-{
+class Texture final {
  public:
-  Texture() : w(0), h(0), id(0){};
+  Texture() : w_(0), h_(0), id_(0){};
   ~Texture() {
-    if (id != 0) glDeleteTextures(1, &id);
+    if (id_ != 0) glDeleteTextures(1, &id_);
   };
-  void load(const std::string& BMP_Name, GLubyte alpha = 255);
-  // cargar y transferir a GPU
-  void bind(GLint modo = GL_REPLACE);  // para mezcla de colores
-  void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
+  void load(const std::string& bmpName, GLubyte alpha = 255);
+  // Load and transfer to the GPU
+  void bind(GLint mode = GL_REPLACE) const;
+  static void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
   void loadColorBuffer();
-  static void save(const std::string& BMP_Name);  // static para que sea
-                                                  // accesible desde el main
+  static void save(const std::string& bmpName);
+
  protected:
-  GLuint w, h;  // dimensiones de la imagen
-  GLuint id;    // identificador interno (GPU) de la textura
+  GLuint w_, h_;  // Image's dimensions
+  GLuint id_;     // Texture's Internal identifier for the GPU
   void init();
 };

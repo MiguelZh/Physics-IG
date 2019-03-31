@@ -1,11 +1,9 @@
-﻿#include <GL/glut.h>  // OpenGL Utility Toolkit
-#include <Windows.h>
-#include <gl/GL.h>   // OpenGL
-#include <gl/GLU.h>  // OpenGL Utility Library
+﻿// #include <GL/glut.h>  // OpenGL Utility Toolkit
+// #include <Windows.h>
+// #include <gl/GL.h>   // OpenGL
+// #include <gl/GLU.h>  // OpenGL Utility Library
 
 #include <GL/freeglut.h>  // Free OpenGL Utility Toolkit for creating windows, initializing OpenGL contexts, and handling input events
-#include <GL/freeglut_ext.h>
-#include <GL/freeglut_std.h>
 #include <glm.hpp>  // OpenGL Mathematics. A C++ mathematics library for graphics programming
 
 #include "Camera.h"
@@ -16,8 +14,7 @@
 
 using namespace std;
 
-//---------- Global variables
-//-------------------------------------------------------------
+// ---------- Global variables
 
 // Viewport position and size
 Viewport viewPort(800, 600);
@@ -25,13 +22,11 @@ Viewport viewPort(800, 600);
 // Camera position, view volume and projection
 Camera camera(&viewPort);
 
-glm::dvec2 mCoord;  // coordenadas del ratón
-int mBot;           // boton pulsado
+glm::dvec2 mCoordinates;  // Mouse coordinates
+int mButton;              // Clicked button
 
 // Graphics objects of the scene
 Scene scene;
-
-//----------- Callbacks ----------------------------------------------------
 
 void display();
 void resize(int newWidth, int newHeight);
@@ -40,9 +35,8 @@ void specialKey(int key, int x, int y);
 void update();
 void mouse(int button, int state, int x, int y);
 void motion(int x, int y);
-void mouseWheel(int n, int d, int x, int y);
+void mouseWheel(int n, int direction, int x, int y);
 
-//-------------------------------------------------------------------------
 GLuint lastUpdateTick;
 bool stopAnim = false;
 
@@ -181,44 +175,37 @@ void mouse(const int button, int state, const int x, const int y) {
   // button is the button from the mouse that has been clicked, it's either
   // GLUT_LEFT_BUTTON or GLUT_RIGHT_BUTTON. state indicates whether or not the
   // button was pressed or left, it's either GLUT_UP or GLUT_DOWN.
-  mBot = button;
-  mCoord = glm::dvec2(x, glutGet(GLUT_WINDOW_HEIGHT) - y);
+  mButton = button;
+  mCoordinates = glm::dvec2(x, glutGet(GLUT_WINDOW_HEIGHT) - y);
 }
 
-void motion(int x, int y) {
-  if (mBot == GLUT_LEFT_BUTTON) {
-    auto mp = mCoord;           // guardar la anterior posición en var. temp.
-    mCoord = glm::dvec2(x, y);  // Guardamos la posición actual
-    mp = (mCoord - mp);         // desplazamiento realizado
-    camera.orbit(mp.x * 0.5, mp.y);  // sensitivity = 0.05
+void motion(const int x, const int y) {
+  if (mButton == GLUT_LEFT_BUTTON) {
+    auto mp =
+        mCoordinates;  // Save the previous position in a temporary variable
+    mCoordinates = glm::dvec2(x, y);  // Save the current position
+    mp = mCoordinates - mp;           // Make a movement
+    camera.orbit(-mp.x * 0.1, mp.y);
     glutPostRedisplay();
-  } else if (mBot == GLUT_RIGHT_BUTTON) {
-    auto mp = mCoord;           // guardar la anterior posición en var. temp.
-    mCoord = glm::dvec2(x, y);  // Guardamos la posición actual
-    mp = mCoord - mp;           // desplazamiento realizado
+  } else if (mButton == GLUT_RIGHT_BUTTON) {
+    auto mp =
+        mCoordinates;  // Save the previous position in a temporary variable
+    mCoordinates = glm::dvec2(x, y);  // Save the current position
+    mp = mCoordinates - mp;           // Make a movement
     camera.moveLR(-mp.x);
     camera.moveUD(mp.y);
     glutPostRedisplay();
   }
 }
 
-void mouseWheel(int n, const int d, int x, int y) {
+void mouseWheel(int n, const int direction, int x, int y) {
   const auto m = glutGetModifiers();
-  if (m == 0)  // ninguna está presionada
+  if (m == 0)  // No key is pressed
   {
-    // direction es la dirección de la rueda (+1 / -1)
-    if (d == 1)
-      camera.moveUD(5);
-    else
-      camera.moveUD(-5);
+    camera.moveUD(direction == 1 ? 5 : -5);
     glutPostRedisplay();
-
   } else if (GLUT_ACTIVE_CTRL) {
-    if (d == 1) {
-      camera.moveFB(5);
-    } else {
-      camera.moveFB(-5);
-    }
+    camera.moveFB(direction == 1 ? 5 : -5);
     glutPostRedisplay();
   }
 }

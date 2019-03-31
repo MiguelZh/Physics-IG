@@ -4,7 +4,7 @@
 #include <GL/freeglut.h>
 #include <string>
 
-class PixMap32RGBA {
+class PixMap32RGBA final {
  public:
   struct rgba_color {
     GLubyte r, g, b, a;

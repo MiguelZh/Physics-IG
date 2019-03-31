@@ -6,7 +6,7 @@
 #include "Viewport.h"
 //-------------------------------------------------------------------------
 
-class Camera {
+class Camera final {
  public:
   explicit Camera(Viewport* avp);
   ~Camera() = default;
