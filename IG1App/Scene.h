@@ -16,6 +16,7 @@ class Scene final {
   void scene2D();
   void scene3D();
   void sceneExam();
+  void sceneSphere();
 
   void render(Camera const& cam);
   void update();

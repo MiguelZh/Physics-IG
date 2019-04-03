@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityMaterial.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Pixmap32RGBA.h" />
     <ClInclude Include="Scene.h" />
@@ -131,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityMaterial.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Pixmap32RGBA.cpp" />
