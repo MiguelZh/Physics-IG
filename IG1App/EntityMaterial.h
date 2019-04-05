@@ -6,16 +6,18 @@ class EntityMaterial : public Entity {
   virtual ~EntityMaterial();
   void setTexture(Texture* text);
 
- private:
-  Texture* texture;
+ protected:
+  Texture* textureMatTexture_{};
 };
 
 class Sphere final : public EntityMaterial {
  public:
-  Sphere();
+  Sphere(GLdouble radius, const std::string& text);
   ~Sphere();
   void render(Camera const& camera) override;
   void update() override;
 
  private:
+  GLUquadricObj* qObj;
+  GLdouble radius_;
 };

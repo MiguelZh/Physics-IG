@@ -66,8 +66,22 @@ void Scene::sceneExam() {
 }
 
 void Scene::sceneSphere() {
-  glEnable(GL_DEPTH_TEST);  // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);           // enable Depth test
   glEnable(GL_TEXTURE_2D);
+  grObjects_.push_back(new EjesRGB(150));
+  grObjects_.push_back(new Sphere(80, "../Bmps/sun.bmp"));
+  grObjects_.back()->setModelMat(
+      translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
+  grObjects_.push_back(new Sphere(15, "../Bmps/mars.bmp"));
+  grObjects_.back()->setModelMat(
+      translate(grObjects_.back()->getModelMat(), dvec3(200, 200, 0)));
+  grObjects_.push_back(new Sphere(14, "../Bmps/moon.bmp"));
+  grObjects_.back()->setModelMat(
+      translate(grObjects_.back()->getModelMat(), dvec3(-200, 200, 0)));
+  grObjects_.push_back(new Sphere(200, "../Bmps/earth.bmp"));
+  grObjects_.back()->setModelMat(
+      translate(grObjects_.back()->getModelMat(), dvec3(0, -200, 0)));
 }
 
 void Scene::render(Camera const &cam) {

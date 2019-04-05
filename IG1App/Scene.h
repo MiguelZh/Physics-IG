@@ -2,6 +2,7 @@
 #include <vector>
 #include "Camera.h"
 #include "Entity.h"
+#include "EntityMaterial.h"
 
 //-------------------------------------------------------------------------
 
