@@ -11,7 +11,6 @@ class EntityMaterial : public Entity {
  protected:
   Texture* textureMatTexture_{};
   Material* material_;
-
 };
 
 class Sphere final : public EntityMaterial {

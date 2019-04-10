@@ -1,5 +1,6 @@
 #pragma once
 #include "Light.h"
+#include <gtc/type_ptr.hpp>
 
 class DirLight : public Light {
  protected:

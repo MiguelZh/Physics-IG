@@ -15,7 +15,7 @@ class Light {
   virtual ~Light();
   virtual void uploadLI();
   virtual void upload(glm::dmat4 const& modelViewMat) = 0;
-  void disable();
-  void enable();
+  void disable() const;
+  void enable() const;
   void setAmb(glm::fvec4 amb);
 };

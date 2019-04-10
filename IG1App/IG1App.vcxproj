@@ -121,22 +121,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DirLight.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityMaterial.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Pixmap32RGBA.h" />
+    <ClInclude Include="PosLight.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DirLight.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityMaterial.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Pixmap32RGBA.cpp" />
+    <ClCompile Include="PosLight.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
