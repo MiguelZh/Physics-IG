@@ -5,6 +5,8 @@ EntityMaterial::~EntityMaterial() = default;
 
 void EntityMaterial::setTexture(Texture* text) { textureMatTexture_ = text; }
 
+void EntityMaterial::setMaterial(Material* material) { material_ = material; }
+
 Sphere::Sphere(const GLdouble radius, const std::string& text) {
   radius_ = radius;
   qObj = gluNewQuadric();
