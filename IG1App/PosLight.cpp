@@ -1,5 +1,5 @@
 #include "PosLight.h"
 
-PosLight::PosLight() {}
+PosLight::PosLight() = default;
 
-PosLight::~PosLight() {}
+PosLight::~PosLight() = default;

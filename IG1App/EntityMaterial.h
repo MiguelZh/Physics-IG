@@ -7,6 +7,8 @@ class EntityMaterial : public Entity {
   virtual ~EntityMaterial();
   void setTexture(Texture* text);
   void setMaterial(Material* material);
+  virtual void render(Camera const& cam) = 0;
+  virtual void update() = 0;
 
  protected:
   Texture* textureMatTexture_{};

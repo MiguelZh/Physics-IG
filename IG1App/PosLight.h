@@ -1,14 +1,15 @@
 #pragma once
 #include <gtc/type_ptr.hpp>
+
 #include "Light.h"
 
 class PosLight : public Light {
- public:
  protected:
   glm::fvec4 position_ = {0, 0, 0, 1};
 
  public:
-  PosLight() = default;
+  PosLight();
+  ~PosLight();
 
   void upload(glm::dmat4 const& modelViewMat) override {
     glMatrixMode(GL_MODELVIEW);

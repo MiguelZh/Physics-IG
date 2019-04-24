@@ -2,6 +2,7 @@
 
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+#include "Material.h"
 
 using namespace glm;
 
@@ -66,8 +67,7 @@ void Scene::sceneExam() {
 }
 
 void Scene::sceneSphere() {
-  glClearColor(0.43, 0.17, 0.87, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+    glClearColor(0.0, 0.0, 0.2, 1.0);   glEnable(GL_DEPTH_TEST);           // enable Depth test
   glEnable(GL_TEXTURE_2D);
   grObjects_.push_back(new EjesRGB(150));
   grObjects_.push_back(new Sphere(60, "../Bmps/sun.bmp"));
