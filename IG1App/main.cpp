@@ -117,6 +117,9 @@ void key(const unsigned char key, int x, int y) {
     case 51:
       scene.scene3D();
       break;
+    case 52:
+        scene.sceneSphere();
+        break;
     case '+':
       camera.uploadScale(+0.02);  // zoom in  (increases the scale)
       break;
@@ -139,6 +142,12 @@ void key(const unsigned char key, int x, int y) {
       // ReSharper disable once StringLiteralTypo
       Texture::save("../Bmps/screenshot.bmp");
       break;
+    case 'v':
+        scene.toggleCamLight();
+        break;
+    case 'b':
+        scene.toggleSphereLight();
+        break;
     default:
       needRedisplay = false;
       break;

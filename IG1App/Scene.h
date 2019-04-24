@@ -1,9 +1,12 @@
 #pragma once
 #include <vector>
+
 #include "Camera.h"
 #include "Entity.h"
 #include "EntityMaterial.h"
-
+class DirLight;
+class SpotLight;
+class PosLight;
 //-------------------------------------------------------------------------
 
 class Scene final {
@@ -19,9 +22,16 @@ class Scene final {
   void sceneExam();
   void sceneSphere();
 
+  void toggleCamLight() const;
+  void toggleSphereLight() const;
+  void toggleDirLight();
+
+
   void render(Camera const& cam);
   void update();
 
  protected:
   std::vector<Entity*> grObjects_;  // Entities (graphics objects) of the scene
+  DirLight* dirLight;
+  SpotLight* camLight;
 };

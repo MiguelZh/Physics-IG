@@ -2,7 +2,11 @@
 
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+
+#include "DirLight.h"
 #include "Material.h"
+#include "PosLight.h"
+#include "SpotLight.h"
 
 using namespace glm;
 
@@ -67,24 +71,59 @@ void Scene::sceneExam() {
 }
 
 void Scene::sceneSphere() {
-    glClearColor(0.0, 0.0, 0.2, 1.0);   glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(0.0, 0.0, 0.2, 1.0);
+  glEnable(GL_DEPTH_TEST);  // enable Depth test
   glEnable(GL_TEXTURE_2D);
+
+  // lights
+  dirLight = new DirLight();
+  dirLight->setDir({0, 0.25, 1});
+  dirLight->uploadLI();
+  dirLight->enable();
+
+  camLight = new SpotLight();
+  camLight->uploadLI();
+  camLight->enable();
   grObjects_.push_back(new EjesRGB(150));
-  grObjects_.push_back(new Sphere(60, "../Bmps/sun.bmp"));
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
-  grObjects_.push_back(new Sphere(30, "../Bmps/mars.bmp"));
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(240, 200, 0)));
-  grObjects_.push_back(new Sphere(35, "../Bmps/moon.bmp"));
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(-200, 180, 0)));
-  grObjects_.push_back(new Sphere(100, "../Bmps/earth.bmp"));
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));
+  /*  grObjects_.push_back(new Sphere(60, "../Bmps/sun.bmp"));
+    grObjects_.back()->setModelMat(
+        translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
+    grObjects_.push_back(new Sphere(30, "../Bmps/mars.bmp"));
+    grObjects_.back()->setModelMat(
+        translate(grObjects_.back()->getModelMat(), dvec3(240, 200, 0)));
+    grObjects_.push_back(new Sphere(35, "../Bmps/moon.bmp"));
+    grObjects_.back()->setModelMat(
+        translate(grObjects_.back()->getModelMat(), dvec3(-200, 180, 0)));
+    grObjects_.push_back(new Sphere(100, "../Bmps/earth.bmp"));
+    grObjects_.back()->setModelMat(
+        translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
+
+  Sphere* earth = new Sphere(100, "../Bmps/earth.bmp");
+  Material p = Material();
+  p.setPewter();
+  earth->setMaterial(&p);
+  grObjects_.push_back(earth);
 }
 
-void Scene::render(Camera const &cam) {
+void Scene::toggleCamLight() const {
+  if (camLight->getEnabled()) {
+    camLight->disable();
+  } else {
+    camLight->enable();
+  }
+}
+
+void Scene::toggleSphereLight() const {}
+
+void Scene::toggleDirLight() {
+  if (dirLight->getEnabled()) {
+    dirLight->disable();
+  } else {
+    dirLight->enable();
+  }
+}
+
+void Scene::render(Camera const& cam) {
   for (auto el : grObjects_) {
     el->render(cam);
   }

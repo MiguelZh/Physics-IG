@@ -1,4 +1,5 @@
 #include "Light.h"
+
 #include <gtc/type_ptr.hpp>
 
 GLuint Light::cont_ = 0;
@@ -18,16 +19,20 @@ void Light::uploadLI() {
   glLightfv(id_, GL_SPECULAR, value_ptr(specular_));
 }
 
-void Light::disable() const {
+void Light::disable() {
   if (id_ < GL_LIGHT0 + GL_MAX_LIGHTS) {
     glDisable(id_);
   }
+  enabled_ = false;
 }
 
-void Light::enable() const {
+void Light::enable() {
   if (id_ < GL_LIGHT0 + GL_MAX_LIGHTS) {
     glEnable(id_);
   }
+  enabled_ = true;
 }
 
 void Light::setAmb(const glm::fvec4 amb) { ambient_ = amb; }
+
+bool Light::getEnabled() const { return enabled_; }
