@@ -30,3 +30,17 @@ void Sphere::render(Camera const& camera) {
 }
 
 void Sphere::update() {}
+
+LightSphere::LightSphere(GLdouble radius,const glm::dvec3 pos) : Sphere(radius,""){
+    spotLight_ = new SpotLight();
+    spotLight_->setDir(glm::fvec3(0, -1, 0));
+    spotLight_->setPos(pos);
+    spotLight_->setAngle(180.);
+    spotLight_->uploadLI();
+    spotLight_->enable();
+}
+
+LightSphere::~LightSphere() {
+    delete spotLight_;
+}
+

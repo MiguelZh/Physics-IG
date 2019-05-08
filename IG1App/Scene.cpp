@@ -111,9 +111,17 @@ void Scene::toggleCamLight() const {
   } else {
     camLight->enable();
   }
+  camLight->setEnabled(!camLight->getEnabled());
 }
-
-void Scene::toggleSphereLight() const {}
+void Scene::toggleSphereLight() const {
+   /* if (Sphere->getEnabled()) {
+        dirLight->disable();
+    }
+    else {
+        dirLight->enable();
+    }
+    dirLight->setEnabled(!dirLight->getEnabled());*/
+}
 
 void Scene::toggleDirLight() {
   if (dirLight->getEnabled()) {
@@ -121,6 +129,7 @@ void Scene::toggleDirLight() {
   } else {
     dirLight->enable();
   }
+  dirLight->setEnabled(!dirLight->getEnabled());
 }
 
 void Scene::render(Camera const& cam) {

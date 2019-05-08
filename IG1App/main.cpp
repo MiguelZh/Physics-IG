@@ -4,13 +4,13 @@
 // #include <gl/GLU.h>  // OpenGL Utility Library
 
 #include <GL/freeglut.h>  // Free OpenGL Utility Toolkit for creating windows, initializing OpenGL contexts, and handling input events
+
 #include <glm.hpp>  // OpenGL Mathematics. A C++ mathematics library for graphics programming
+#include <iostream>
 
 #include "Camera.h"
 #include "Scene.h"
 #include "Viewport.h"
-
-#include <iostream>
 
 using namespace std;
 
@@ -118,8 +118,8 @@ void key(const unsigned char key, int x, int y) {
       scene.scene3D();
       break;
     case 52:
-        scene.sceneSphere();
-        break;
+      scene.sceneSphere();
+      break;
     case '+':
       camera.uploadScale(+0.02);  // zoom in  (increases the scale)
       break;
@@ -143,11 +143,14 @@ void key(const unsigned char key, int x, int y) {
       Texture::save("../Bmps/screenshot.bmp");
       break;
     case 'v':
-        scene.toggleCamLight();
-        break;
+      scene.toggleCamLight();
+      break;
     case 'b':
-        scene.toggleSphereLight();
-        break;
+      scene.toggleSphereLight();
+      break;
+    case 'c':
+      scene.toggleDirLight();
+      break;
     default:
       needRedisplay = false;
       break;

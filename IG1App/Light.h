@@ -20,4 +20,5 @@ class Light {
   void enable();
   void setAmb(glm::fvec4 amb);
   bool getEnabled() const;
+  void setEnabled(bool enable);
 };

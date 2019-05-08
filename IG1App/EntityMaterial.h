@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.h"
 #include "Material.h"
+#include "SpotLight.h"
+
 class EntityMaterial : public Entity {
  public:
   EntityMaterial();
@@ -15,7 +17,7 @@ class EntityMaterial : public Entity {
   Material* material_;
 };
 
-class Sphere final : public EntityMaterial {
+class Sphere : public EntityMaterial {
  public:
   Sphere(GLdouble radius, const std::string& text);
   ~Sphere();
@@ -25,4 +27,10 @@ class Sphere final : public EntityMaterial {
  private:
   GLUquadricObj* qObj;
   GLdouble radius_;
+};
+class LightSphere final : public Sphere {
+ public:
+  LightSphere(GLdouble radius, const glm::dvec3 pos);
+  ~LightSphere();
+  SpotLight* spotLight_;
 };

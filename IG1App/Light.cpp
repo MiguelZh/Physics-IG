@@ -36,3 +36,5 @@ void Light::enable() {
 void Light::setAmb(const glm::fvec4 amb) { ambient_ = amb; }
 
 bool Light::getEnabled() const { return enabled_; }
+void Light::setEnabled(const bool enable) { enabled_ = enable; }
+
