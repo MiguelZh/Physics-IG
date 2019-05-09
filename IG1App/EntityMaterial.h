@@ -29,8 +29,10 @@ class Sphere : public EntityMaterial {
   GLdouble radius_;
 };
 class LightSphere final : public Sphere {
- public:
-  LightSphere(GLdouble radius, const glm::dvec3 pos);
-  ~LightSphere();
   SpotLight* spotLight_;
+
+ public:
+  LightSphere(GLdouble radius, const std::string& text);
+  ~LightSphere();
+  SpotLight* getSpotLight();
 };

@@ -1,17 +1,18 @@
 #pragma once
 #include <GL/freeglut.h>
+
 #include <glm.hpp>
 
 class Light {
  protected:
-  static GLuint cont_;                     
-  GLuint id_ = GL_LIGHT0 + GL_MAX_LIGHTS;  
+  static GLuint cont_;
+  GLuint id_ = GL_LIGHT0 + GL_MAX_LIGHTS;
   glm::fvec4 ambient_ = {0.1, 0.1, 0.1, 1};
   glm::fvec4 diffuse_ = {0.5, 0.5, 0.5, 1};
   glm::fvec4 specular_ = {0.5, 0.5, 0.5, 1};
-  bool enabled_ = true;
+  bool enabled_;
 
- public:  
+ public:
   Light();
   virtual ~Light();
   virtual void uploadLI();

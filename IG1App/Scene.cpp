@@ -81,9 +81,9 @@ void Scene::sceneSphere() {
   dirLight->uploadLI();
   dirLight->enable();
 
-  camLight = new SpotLight();
-  camLight->uploadLI();
-  camLight->enable();
+  spotLight_ = new SpotLight();
+  spotLight_->uploadLI();
+  spotLight_->enable();
   grObjects_.push_back(new EjesRGB(150));
   /*  grObjects_.push_back(new Sphere(60, "../Bmps/sun.bmp"));
     grObjects_.back()->setModelMat(
@@ -98,32 +98,32 @@ void Scene::sceneSphere() {
     grObjects_.back()->setModelMat(
         translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
-  Sphere* earth = new Sphere(100, "../Bmps/earth.bmp");
+  LightSphere* earth = new LightSphere(100, "../Bmps/earth.bmp");
   Material p = Material();
   p.setPewter();
   earth->setMaterial(&p);
+  spotLight_ = earth->getSpotLight();
   grObjects_.push_back(earth);
 }
 
 void Scene::toggleCamLight() const {
-  if (camLight->getEnabled()) {
-    camLight->disable();
+  if (spotLight_->getEnabled()) {
+    spotLight_->disable();
   } else {
-    camLight->enable();
+    spotLight_->enable();
   }
-  camLight->setEnabled(!camLight->getEnabled());
+  spotLight_->setEnabled(!spotLight_->getEnabled());
 }
 void Scene::toggleSphereLight() const {
-   /* if (Sphere->getEnabled()) {
-        dirLight->disable();
-    }
-    else {
-        dirLight->enable();
-    }
-    dirLight->setEnabled(!dirLight->getEnabled());*/
+  if (spotLight_->getEnabled()) {
+    spotLight_->disable();
+  } else {
+    spotLight_->enable();
+  }
+  spotLight_->setEnabled(!dirLight->getEnabled());
 }
 
-void Scene::toggleDirLight() {
+void Scene::toggleDirLight() const {
   if (dirLight->getEnabled()) {
     dirLight->disable();
   } else {

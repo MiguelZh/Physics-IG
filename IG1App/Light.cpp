@@ -5,6 +5,7 @@
 GLuint Light::cont_ = 0;
 
 Light::Light() {
+  enabled_ = false;
   if (cont_ < GL_MAX_LIGHTS) {
     id_ = GL_LIGHT0 + cont_;
     ++cont_;
@@ -23,18 +24,15 @@ void Light::disable() {
   if (id_ < GL_LIGHT0 + GL_MAX_LIGHTS) {
     glDisable(id_);
   }
-  enabled_ = false;
 }
 
 void Light::enable() {
   if (id_ < GL_LIGHT0 + GL_MAX_LIGHTS) {
     glEnable(id_);
   }
-  enabled_ = true;
 }
 
 void Light::setAmb(const glm::fvec4 amb) { ambient_ = amb; }
 
 bool Light::getEnabled() const { return enabled_; }
 void Light::setEnabled(const bool enable) { enabled_ = enable; }
-

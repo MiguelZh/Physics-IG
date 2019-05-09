@@ -24,8 +24,7 @@ class Scene final {
 
   void toggleCamLight() const;
   void toggleSphereLight() const;
-  void toggleDirLight();
-
+  void toggleDirLight() const;
 
   void render(Camera const& cam);
   void update();
@@ -33,5 +32,5 @@ class Scene final {
  protected:
   std::vector<Entity*> grObjects_;  // Entities (graphics objects) of the scene
   DirLight* dirLight;
-  SpotLight* camLight;
+  SpotLight* spotLight_;
 };
