@@ -60,6 +60,9 @@
     <ClInclude Include="PosLight.h">
       <Filter>Archivos de encabezado\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="IndexMesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="PosLight.cpp">
       <Filter>Archivos de código fuente\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexMesh.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
