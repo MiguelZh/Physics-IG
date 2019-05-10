@@ -32,5 +32,6 @@ class Scene final {
  protected:
   std::vector<Entity*> grObjects_;  // Entities (graphics objects) of the scene
   DirLight* dirLight;
-  SpotLight* spotLight_;
+  SpotLight* camLight_;
+  LightSphere * lightSphere_;
 };

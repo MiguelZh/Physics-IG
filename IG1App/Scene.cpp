@@ -15,8 +15,8 @@ Scene::Scene() = default;
 Scene::~Scene() { clearObjects(); }
 
 void Scene::init() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_CULL_FACE);
 }
@@ -28,7 +28,7 @@ void Scene::scene2D() {
   grObjects_.push_back(new CuboTex(30));
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(15, 30, 0)));
-  grObjects_.push_back(new Rectangulo(10, 10, -20));  // rect without texture
+  grObjects_.push_back(new Rectangulo(10, 10, -20)); // rect without texture
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(35, 55, 20)));
   grObjects_.push_back(new RectangleTex(200, 200, 4, 4));
@@ -56,8 +56,8 @@ void Scene::scene3D() {
 }
 
 void Scene::sceneExam() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
 
   grObjects_.push_back(new EjesRGB(50));
@@ -72,7 +72,7 @@ void Scene::sceneExam() {
 
 void Scene::sceneSphere() {
   glClearColor(0.0, 0.0, 0.2, 1.0);
-  glEnable(GL_DEPTH_TEST);  // enable Depth test
+  glEnable(GL_DEPTH_TEST); // enable Depth test
   glEnable(GL_TEXTURE_2D);
 
   // lights
@@ -81,9 +81,9 @@ void Scene::sceneSphere() {
   dirLight->uploadLI();
   dirLight->enable();
 
-  spotLight_ = new SpotLight();
-  spotLight_->uploadLI();
-  spotLight_->enable();
+  camLight_ = new SpotLight();
+  camLight_->uploadLI();
+  camLight_->enable();
   grObjects_.push_back(new EjesRGB(150));
   /*  grObjects_.push_back(new Sphere(60, "../Bmps/sun.bmp"));
     grObjects_.back()->setModelMat(
@@ -98,29 +98,30 @@ void Scene::sceneSphere() {
     grObjects_.back()->setModelMat(
         translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
-  LightSphere* earth = new LightSphere(100, "../Bmps/earth.bmp");
+  lightSphere_ = new LightSphere(100, "../Bmps/earth.bmp");
   Material p = Material();
   p.setPewter();
-  earth->setMaterial(&p);
-  spotLight_ = earth->getSpotLight();
-  grObjects_.push_back(earth);
+  lightSphere_->setMaterial(&p);
+  camLight_ = lightSphere_->getSpotLight();
+  grObjects_.push_back(lightSphere_);
 }
 
 void Scene::toggleCamLight() const {
-  if (spotLight_->getEnabled()) {
-    spotLight_->disable();
+  if (camLight_->getEnabled()) {
+    camLight_->disable();
   } else {
-    spotLight_->enable();
+    camLight_->enable();
   }
-  spotLight_->setEnabled(!spotLight_->getEnabled());
+  camLight_->setEnabled(!camLight_->getEnabled());
 }
 void Scene::toggleSphereLight() const {
-  if (spotLight_->getEnabled()) {
-    spotLight_->disable();
+  if (lightSphere_->getSpotLight()->getEnabled()) {
+    lightSphere_->getSpotLight()->disable();
   } else {
-    spotLight_->enable();
+    lightSphere_->getSpotLight()->enable();
   }
-  spotLight_->setEnabled(!dirLight->getEnabled());
+  lightSphere_->getSpotLight()->setEnabled(
+      !lightSphere_->getSpotLight()->getEnabled());
 }
 
 void Scene::toggleDirLight() const {
@@ -132,7 +133,7 @@ void Scene::toggleDirLight() const {
   dirLight->setEnabled(!dirLight->getEnabled());
 }
 
-void Scene::render(Camera const& cam) {
+void Scene::render(Camera const &cam) {
   for (auto el : grObjects_) {
     el->render(cam);
   }
@@ -144,6 +145,7 @@ void Scene::update() {
 }
 
 void Scene::clearObjects() {
-  for (auto el : grObjects_) delete el;
+  for (auto el : grObjects_)
+    delete el;
   grObjects_.clear();
 }

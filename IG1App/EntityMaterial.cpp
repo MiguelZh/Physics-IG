@@ -34,8 +34,8 @@ void Sphere::update() {}
 LightSphere::LightSphere(GLdouble radius, const std::string& text)
     : Sphere(radius, text) {
   spotLight_ = new SpotLight();
-  // spotLight_->setDir(glm::fvec3(0, -1, 0));
-  // spotLight_->setAngle(180.);
+  spotLight_->setDir(glm::fvec3(0, -1, 0));
+  spotLight_->setAngle(180.);
   spotLight_->uploadLI();
   spotLight_->enable();
 }
