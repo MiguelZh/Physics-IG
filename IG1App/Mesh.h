@@ -32,7 +32,6 @@ class Mesh final {
 
   glm::dvec3* getVertices() const { return vertices; };  // vertex array
   glm::dvec4* getColors() const { return colors; };      // color array
-
  protected:
   GLuint numVertices = 0;           // arrays size (number of elements)
   GLuint primitive = GL_TRIANGLES;  // graphic primitive: GL_POINTS, GL_LINES,
@@ -42,6 +41,8 @@ class Mesh final {
   glm::dvec4* colors = nullptr;    // color array
   glm::dvec2* textures =
       nullptr;  // textures array // array de coordenadas de textura
+  glm::dvec3* normals = nullptr;
+
 };
 
 //-------------------------------------------------------------------------

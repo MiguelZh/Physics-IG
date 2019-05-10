@@ -28,6 +28,11 @@ void Mesh::render() const {
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glTexCoordPointer(2, GL_DOUBLE, 0, textures);
     }
+    if (normals != nullptr) {
+      glEnableClientState(GL_NORMAL_ARRAY);
+      glNormalPointer(GL_DOUBLE, 0, normals);
+      glDisableClientState(GL_NORMAL_ARRAY);
+    }
 
     glDrawArrays(primitive, 0,
                  numVertices);  // primitive graphic, first index and number of
