@@ -6,8 +6,7 @@ GLuint Light::cont_ = 0;
 
 Light::Light() {
   if (cont_ < GL_MAX_LIGHTS) {
-    id_ = GL_LIGHT0 + cont_;
-    ++cont_;
+    id_ = GL_LIGHT0 + cont_++;
   }
 }
 

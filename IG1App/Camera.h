@@ -34,7 +34,8 @@ class Camera final {
   void moveLR(GLdouble cs);
   void moveFB(GLdouble cs);
   void changePrj();
-
+  glm::dvec3 getPos() const;
+  glm::dvec3 getDir() const;
   void orbit(GLdouble incAng,
              GLdouble incY);  // modifies the camera's position
 

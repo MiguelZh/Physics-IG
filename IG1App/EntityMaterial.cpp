@@ -21,8 +21,9 @@ Sphere::~Sphere() { gluDeleteQuadric(qObj); }
 
 void Sphere::render(Camera const& camera) {
   uploadMvM(camera.getViewMat());
+  glShadeModel(GL_SMOOTH); // Gouraud Shading
   glEnable(GL_CULL_FACE);
-  texture_.bind();
+  texture_.bind(GL_MODULATE);
   gluSphere(qObj, radius_, 36, 36);
   Texture::unbind();
 
