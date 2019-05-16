@@ -1,5 +1,5 @@
 #include "EntityMaterial.h"
-
+#include "IndexMesh.h"
 EntityMaterial::EntityMaterial() = default;
 EntityMaterial::~EntityMaterial() = default;
 
@@ -46,3 +46,28 @@ LightSphere::LightSphere(GLdouble radius, const std::string &text,
 LightSphere::~LightSphere() { delete spotLight_; }
 
 SpotLight *LightSphere::getSpotLight() { return spotLight_; }
+
+CurvedTerrain::CurvedTerrain(GLdouble lado, GLuint numDiv,
+                             const std::string &text) {
+  indexMesh_ = IndexMesh::generateCurvedTerrain(lado, numDiv);
+  texture_.load(text, 150);
+}
+
+CurvedTerrain::~CurvedTerrain() {
+  delete indexMesh_;
+  indexMesh_ = nullptr;
+}
+
+void CurvedTerrain::render(Camera const &camera) {
+  if (indexMesh_ != nullptr) {
+    // glEnable(GL_CULL_FACE);
+    uploadMvM(camera.getViewMat());
+    material_->upload();
+    texture_.bind(GL_MODULATE);
+    indexMesh_->render();
+    texture_.unbind();
+    // glDisable(GL_CULL_FACE);
+  }
+}
+
+void CurvedTerrain::update() {}

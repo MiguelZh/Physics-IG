@@ -1,10 +1,11 @@
 #include "IndexMesh.h"
 
-/*IndexMesh::IndexMesh() : Mesh() { primitive = GL_TRIANGLES; }
+IndexMesh::IndexMesh() : Mesh() { primitive = GL_TRIANGLES; }
 
 IndexMesh::~IndexMesh() { delete[] indices_; }
 
 void IndexMesh::render() {
+  Mesh::render();
   // comandos OpenGL para enviar los datos de los arrays a la GPU (Mesh)
   // Los comandos para la nueva tabla de índices:
   glEnableClientState(GL_INDEX_ARRAY);
@@ -16,21 +17,69 @@ void IndexMesh::render() {
   glDisableClientState(GL_INDEX_ARRAY);
 }
 
-IndexMesh* IndexMesh::generateGridTex(
-    GLdouble lado,
-    GLuint numDiv) {  // Grid cuadrado de lado*lado, centrado en el plano Y=0,
-  // dividido en numDiv*numDiv celdas (cada celda son 2 triángulos)
-  IndexMesh* m = new IndexMesh();
-  GLdouble incr = lado / numDiv;  // incremento para la coordenada x, y la c. z
-  GLuint numFC = numDiv + 1;      // número de vértices por filas y columnas
+IndexMesh *IndexMesh::generateGrid(GLdouble lado, GLuint numDiv) {
+  IndexMesh *m = new IndexMesh();
+  m->primitive = GL_TRIANGLES;
+  GLdouble incr = lado / numDiv; // incremento para la coordenada x, y la c. z
+  GLuint numFC = numDiv + 1;     // número de vértices por filas y columnas
   // generar vértices
-  m->numVertices = numFC * numFC;  // número de vértices
+  m->numVertices = numFC * numFC; // número de vértices
   m->vertices = new glm::dvec3[m->numVertices];
-  // ->
-  // ->
-  // generar índices
-  m->numIndices = numDiv * numDiv * 6;  // número de índices
+
+  for (int f = 0; f < numFC; f++) {
+    for (int c = 0; c < numFC; c++) {
+      m->vertices[f * numFC + c] =
+          glm::dvec3((-lado / 2) + c * incr, 0, (-lado / 2) + f * incr);
+    }
+  }
+  m->numIndices = numDiv * numDiv * 6; // número de índices
   m->indices_ = new GLuint[m->numIndices];
-  // ->
+
+  for (int h = 0; h < numDiv; h++) {
+    for (int k = 0; k < numDiv; k++) {
+      GLuint i = 0; // array de índices
+      GLuint iv = h * numFC + k;
+      m->indices_[i++] = iv;
+      m->indices_[i++] = iv + numFC;
+      m->indices_[i++] = iv + 1;
+      m->indices_[i++] = iv + 1;
+      m->indices_[i++] = iv + numFC;
+      m->indices_[i++] = iv + numFC + 1;
+    }
+  }
   return m;
-}*/
+}
+IndexMesh *IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv) {
+  IndexMesh *m = generateGrid(lado, numDiv);
+  GLuint numFC = numDiv + 1; // número de vértices por filas y columnas
+  // generar coordenadas de textura
+  m->textures = new glm::dvec2[m->numVertices];
+
+  for (int f = 0; f < numFC; f++) {
+    for (int c = 0; c < numFC; c++) {
+      m->textures[f * numFC + c] = glm::dvec2((-lado / 2) + c * 1 / numDiv,
+                                              (-lado / 2) - f * 1 / numDiv);
+    }
+  }
+
+  return m;
+}
+
+IndexMesh *IndexMesh::generateCurvedTerrain(GLdouble lado, GLuint numDiv) {
+  IndexMesh *m = generateGridTex(lado, numDiv);
+  GLdouble curvatura = 0.5;
+  m->normals = new glm::dvec3[m->numVertices];
+  for (int j = 0; j < m->numVertices; j++) {
+    // modificar la coordenada Y de los vértices con la ecuación
+    m->vertices[j] = glm::dvec3(
+        m->vertices[j].x,
+        lado * curvatura / 2 -
+            curvatura / lado * (m->vertices[j].z * m->vertices[j].z) -
+            curvatura / lado * (m->vertices[j].z * m->vertices[j].z),
+        m->vertices[j].z);
+    m->normals[j] =
+        glm::normalize(glm::dvec3(2 * curvatura / lado * m->vertices[j].x, 1.,
+                                  2 * curvatura / lado * m->vertices[j].z));
+  }
+  return m;
+}

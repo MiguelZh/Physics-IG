@@ -125,6 +125,10 @@ void Scene::sceneSphere() {
   grObjects_.push_back(earth);
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(0, 0, 0)));
+
+  CurvedTerrain *terrain = new CurvedTerrain(200, 15, "../Bmps/terreno.bmp");
+  terrain->setMaterial(materials_[Gold]);
+  grObjects_.push_back(terrain);
 }
 
 void Scene::toggleCamLight() const {
