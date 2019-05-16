@@ -119,7 +119,7 @@ void Scene::sceneSphere() {
 
   lightSphere_ = new LightSphere(100, "../Bmps/earth.bmp");
   lightSphere_->setMaterial(materials_[Gold]);
-  grObjects_.push_back(lightSphere_);
+ // grObjects_.push_back(lightSphere_);
 
   LightSphere* sun = new LightSphere(30, "../Bmps/sun.bmp");
   sun->setMaterial(materials_[Bronze]);
@@ -163,7 +163,8 @@ void Scene::render(Camera const& cam) {
   camLight_->upload(cam.getViewMat());
 
   lightSphere_->spotLight_->upload(cam.getViewMat());
-  
+  lightSphere_->render(cam);
+
   for (auto el : grObjects_) {
     el->render(cam);
   }
