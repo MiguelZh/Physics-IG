@@ -15,11 +15,10 @@ Scene::Scene() = default;
 Scene::~Scene() { clearObjects(); }
 
 void Scene::init() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_CULL_FACE);
-
 }
 
 void Scene::scene2D() {
@@ -29,7 +28,7 @@ void Scene::scene2D() {
   grObjects_.push_back(new CuboTex(30));
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(15, 30, 0)));
-  grObjects_.push_back(new Rectangulo(10, 10, -20));  // rect without texture
+  grObjects_.push_back(new Rectangulo(10, 10, -20)); // rect without texture
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(35, 55, 20)));
   grObjects_.push_back(new RectangleTex(200, 200, 4, 4));
@@ -57,8 +56,8 @@ void Scene::scene3D() {
 }
 
 void Scene::sceneExam() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
 
   grObjects_.push_back(new EjesRGB(50));
@@ -73,27 +72,26 @@ void Scene::sceneExam() {
 
 void Scene::sceneSphere() {
   glClearColor(0.0, 0.0, 0.2, 1.0);
-  glEnable(GL_DEPTH_TEST);  // enable Depth test
+  glEnable(GL_DEPTH_TEST); // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);
-  glEnable(GL_NORMALIZE);  // lights
-    
+  glEnable(GL_NORMALIZE); // lights
+
   for (int i = 0; i < End; i++) {
 
-	  Material* x = new Material();
-	  switch (i)
-	  {
-	  case Copper:
-		  x->setCopper();
-		  break;
-	  case Gold:
-		  x->setGold();
-		  break;
-	  case Bronze:
-		  x->setBronze();
-		  break;
-	  }
-	  materials_.push_back(x);
+    Material *x = new Material();
+    switch (i) {
+    case Copper:
+      x->setCopper();
+      break;
+    case Gold:
+      x->setGold();
+      break;
+    case Bronze:
+      x->setBronze();
+      break;
+    }
+    materials_.push_back(x);
   }
   dirLight = new DirLight();
   dirLight->setDir({0, 0.25, -10});
@@ -117,15 +115,18 @@ void Scene::sceneSphere() {
     grObjects_.back()->setModelMat(
         translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
-  lightSphere_ = new LightSphere(100, "../Bmps/earth.bmp");
+  lightSphere_ = new LightSphere(30, "../Bmps/sun.bmp");
   lightSphere_->setMaterial(materials_[Gold]);
- // grObjects_.push_back(lightSphere_);
-
-  LightSphere* sun = new LightSphere(30, "../Bmps/sun.bmp");
-  sun->setMaterial(materials_[Bronze]);
-  grObjects_.push_back(sun);
-  grObjects_.back()->setModelMat(
+  // grObjects_.push_back(lightSphere_);
+  // grObjects_.back()->setModelMat(
+  lightSphere_->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
+
+  Sphere *earth = new Sphere(100, "../Bmps/earth.bmp");
+  earth->setMaterial(materials_[Bronze]);
+  grObjects_.push_back(earth);
+  grObjects_.back()->setModelMat(
+      translate(grObjects_.back()->getModelMat(), dvec3(0, 0, 0)));
 }
 
 void Scene::toggleCamLight() const {
@@ -142,8 +143,7 @@ void Scene::toggleSphereLight() const {
   } else {
     lightSphere_->spotLight_->enable();
   }
-  lightSphere_->spotLight_->setEnabled(
-      !lightSphere_->spotLight_->getEnabled());
+  lightSphere_->spotLight_->setEnabled(!lightSphere_->spotLight_->getEnabled());
 }
 
 void Scene::toggleDirLight() const {
@@ -155,15 +155,14 @@ void Scene::toggleDirLight() const {
   dirLight->setEnabled(!dirLight->getEnabled());
 }
 
-void Scene::render(Camera const& cam) {
+void Scene::render(Camera const &cam) {
 
-	dirLight->upload(cam.getViewMat());
+  dirLight->upload(cam.getViewMat());
   camLight_->setPos(cam.getPos());
   camLight_->setDir(cam.getDir());
   camLight_->upload(cam.getViewMat());
-
-  lightSphere_->spotLight_->upload(cam.getViewMat());
   lightSphere_->render(cam);
+  lightSphere_->spotLight_->upload(cam.getViewMat());
 
   for (auto el : grObjects_) {
     el->render(cam);
@@ -176,6 +175,7 @@ void Scene::update() {
 }
 
 void Scene::clearObjects() {
-  for (auto el : grObjects_) delete el;
+  for (auto el : grObjects_)
+    delete el;
   grObjects_.clear();
 }

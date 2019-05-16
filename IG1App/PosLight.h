@@ -15,7 +15,7 @@ class PosLight : public Light {
     glMatrixMode(GL_MODELVIEW);
     glLoadMatrixd(value_ptr(modelViewMat));
     glLightfv(id_, GL_POSITION, value_ptr(position_));
-    uploadLI();
+    //uploadLI();
   };
   void setPos(const glm::fvec3 pos) { position_ = glm::fvec4(pos, 1.0); };
 };

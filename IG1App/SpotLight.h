@@ -11,8 +11,11 @@ class SpotLight : public PosLight {
   virtual void upload(glm::dmat4 const &modelMat) {
     glMatrixMode(GL_MODELVIEW);
     glLoadMatrixd(value_ptr(modelMat));
-    glLightf(id_, GL_SPOT_CUTOFF, 90);
-    glLightf(id_, GL_SPOT_EXPONENT, 4);
+	glLightf(id_, GL_SPOT_CUTOFF, 90);
+	glLightf(id_, GL_SPOT_EXPONENT, 4.0);
+	//glLightfv(id_, GL_SPOT_DIRECTION, value_ptr(spotDir));
+	glLightfv(id_, GL_POSITION, glm::value_ptr(position_));
+
   }
   virtual void setDir(glm::fvec3 dir) { spotDir = glm::fvec4(dir, 0); }
   virtual void setExponent(const double exponent) {
