@@ -19,6 +19,7 @@ void Scene::init() {
   glEnable(GL_DEPTH_TEST);           // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_CULL_FACE);
+
 }
 
 void Scene::scene2D() {
@@ -77,6 +78,23 @@ void Scene::sceneSphere() {
   glEnable(GL_LIGHTING);
   glEnable(GL_NORMALIZE);  // lights
     
+  for (int i = 0; i < End; i++) {
+
+	  Material* x = new Material();
+	  switch (i)
+	  {
+	  case Copper:
+		  x->setCopper();
+		  break;
+	  case Gold:
+		  x->setGold();
+		  break;
+	  case Bronze:
+		  x->setBronze();
+		  break;
+	  }
+	  materials_.push_back(x);
+  }
   dirLight = new DirLight();
   dirLight->setDir({0, 0.25, -10});
   dirLight->uploadLI();
@@ -100,29 +118,11 @@ void Scene::sceneSphere() {
         translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
   lightSphere_ = new LightSphere(100, "../Bmps/earth.bmp");
-  Material p = Material();
-  p.setPewter();
-  lightSphere_->setMaterial(&p);
+  lightSphere_->setMaterial(materials_[Gold]);
   grObjects_.push_back(lightSphere_);
 
-  LightSphere* mars = new LightSphere(30, "../Bmps/mars.bmp");
-  Material marsP = Material();
-  marsP.setBronze();
-  mars->setMaterial(&marsP);
-  grObjects_.push_back(mars);
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(240, 200, 0)));
-  LightSphere* moon = new LightSphere(30, "../Bmps/moon.bmp");
-  Material moonP = Material();
-  moonP.setPolishedSilver();
-  moon->setMaterial(&moonP);
-  grObjects_.push_back(moon);
-  grObjects_.back()->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(-200, 180, 0)));
-  LightSphere* sun = new LightSphere(50, "../Bmps/sun.bmp");
-  Material sunP = Material();
-  sunP.setSilver();
-  sun->setMaterial(&sunP);
+  LightSphere* sun = new LightSphere(30, "../Bmps/sun.bmp");
+  sun->setMaterial(materials_[Bronze]);
   grObjects_.push_back(sun);
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
@@ -137,13 +137,13 @@ void Scene::toggleCamLight() const {
   camLight_->setEnabled(!camLight_->getEnabled());
 }
 void Scene::toggleSphereLight() const {
-  if (lightSphere_->getSpotLight()->getEnabled()) {
-    lightSphere_->getSpotLight()->disable();
+  if (lightSphere_->spotLight_->getEnabled()) {
+    lightSphere_->spotLight_->disable();
   } else {
-    lightSphere_->getSpotLight()->enable();
+    lightSphere_->spotLight_->enable();
   }
-  lightSphere_->getSpotLight()->setEnabled(
-      !lightSphere_->getSpotLight()->getEnabled());
+  lightSphere_->spotLight_->setEnabled(
+      !lightSphere_->spotLight_->getEnabled());
 }
 
 void Scene::toggleDirLight() const {
@@ -156,9 +156,14 @@ void Scene::toggleDirLight() const {
 }
 
 void Scene::render(Camera const& cam) {
+
+	dirLight->upload(cam.getViewMat());
   camLight_->setPos(cam.getPos());
   camLight_->setDir(cam.getDir());
   camLight_->upload(cam.getViewMat());
+
+  lightSphere_->spotLight_->upload(cam.getViewMat());
+  
   for (auto el : grObjects_) {
     el->render(cam);
   }

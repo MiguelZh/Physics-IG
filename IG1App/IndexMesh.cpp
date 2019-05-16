@@ -1,6 +1,6 @@
 #include "IndexMesh.h"
 
-IndexMesh::IndexMesh() : Mesh() { primitive = GL_TRIANGLES; }
+/*IndexMesh::IndexMesh() : Mesh() { primitive = GL_TRIANGLES; }
 
 IndexMesh::~IndexMesh() { delete[] indices_; }
 
@@ -33,4 +33,4 @@ IndexMesh* IndexMesh::generateGridTex(
   m->indices_ = new GLuint[m->numIndices];
   // ->
   return m;
-}
+}*/

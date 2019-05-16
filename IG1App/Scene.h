@@ -31,6 +31,14 @@ class Scene final {
 
  protected:
   std::vector<Entity*> grObjects_;  // Entities (graphics objects) of the scene
+  std::vector<Material*> materials_;
+  enum numMat
+  {
+	  Copper,
+	  Gold,
+	  Bronze,
+	  End
+  };
   DirLight* dirLight;
   SpotLight* camLight_;
   LightSphere * lightSphere_;
