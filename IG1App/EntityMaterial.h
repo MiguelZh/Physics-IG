@@ -1,8 +1,9 @@
 #pragma once
 #include "Entity.h"
-#include "IndexMesh.h"
 #include "Material.h"
 #include "SpotLight.h"
+
+class IndexMesh;
 
 class EntityMaterial : public Entity {
 public:

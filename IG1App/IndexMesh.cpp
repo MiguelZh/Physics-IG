@@ -11,7 +11,7 @@ void IndexMesh::render() {
   glEnableClientState(GL_INDEX_ARRAY);
   glIndexPointer(GL_UNSIGNED_INT, 0, indices_);
   // Comando para renderizar la malla indexada enviada
-  glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices_);
+  //glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices_); PENDING FIX, THIS LINE TRIGGERS THE EXCEPTION
   // comandos OpenGL para deshabilitar los datos enviados a la GPU (Mesh)
   // El comando para la nueva tabla de índices:
   glDisableClientState(GL_INDEX_ARRAY);
