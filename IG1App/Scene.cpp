@@ -115,14 +115,12 @@ void Scene::sceneSphere() {
     grObjects_.back()->setModelMat(
         translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
-  lightSphere_ = new LightSphere(30, "../Bmps/sun.bmp");
+  lightSphere_ = new LightSphere(30, "../Bmps/sun.bmp", dvec3(0, 150, 0));
   lightSphere_->setMaterial(materials_[Gold]);
   // grObjects_.push_back(lightSphere_);
   // grObjects_.back()->setModelMat(
-  lightSphere_->setModelMat(
-      translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
 
-  Sphere *earth = new Sphere(100, "../Bmps/earth.bmp");
+  Sphere *earth = new Sphere(70, "../Bmps/earth.bmp");
   earth->setMaterial(materials_[Bronze]);
   grObjects_.push_back(earth);
   grObjects_.back()->setModelMat(

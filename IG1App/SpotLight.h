@@ -13,7 +13,6 @@ class SpotLight : public PosLight {
     glLoadMatrixd(value_ptr(modelMat));
 	glLightf(id_, GL_SPOT_CUTOFF, 90);
 	glLightf(id_, GL_SPOT_EXPONENT, 4.0);
-	//glLightfv(id_, GL_SPOT_DIRECTION, value_ptr(spotDir));
 	glLightfv(id_, GL_POSITION, glm::value_ptr(position_));
 
   }

@@ -20,7 +20,7 @@ Sphere::~Sphere() { gluDeleteQuadric(qObj); }
 
 void Sphere::render(Camera const &camera) {
   material_->upload();
-  // glShadeModel(GL_SMOOTH); // Gouraud Shading
+  glShadeModel(GL_SMOOTH); // Gouraud Shading
   glEnable(GL_CULL_FACE);
   texture_.bind(GL_MODULATE);
   uploadMvM(camera.getViewMat());
@@ -32,13 +32,15 @@ void Sphere::render(Camera const &camera) {
 
 void Sphere::update() {}
 
-LightSphere::LightSphere(GLdouble radius, const std::string &text)
+LightSphere::LightSphere(GLdouble radius, const std::string &text,
+                         glm::dvec3 pos)
     : Sphere(radius, text) {
   spotLight_ = new SpotLight();
-  spotLight_->setPos(glm::dvec3(0.0, 200.0, 0.0));
-  spotLight_->setDir(glm::fvec3(0, 0, 0));
+  spotLight_->setPos(pos);
+  spotLight_->setDir(glm::fvec3(100, 100, 0));
   spotLight_->uploadLI();
   spotLight_->enable();
+  modelMat_ = glm::translate(getModelMat(), pos);
 }
 
 LightSphere::~LightSphere() { delete spotLight_; }
