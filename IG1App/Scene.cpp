@@ -115,9 +115,9 @@ void Scene::sceneSphere() {
     grObjects_.back()->setModelMat(
         translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
-  lightSphere_ = new LightSphere(30, "../Bmps/sun.bmp", dvec3(0, 150, 0));
+  lightSphere_ = new LightSphere(30, "../Bmps/papelE.bmp", dvec3(0, 150, 0));
   lightSphere_->setMaterial(materials_[Gold]);
-  // grObjects_.push_back(lightSphere_);
+   grObjects_.push_back(lightSphere_);
   // grObjects_.back()->setModelMat(
 
   Sphere *earth = new Sphere(70, "../Bmps/earth.bmp");
@@ -165,8 +165,8 @@ void Scene::render(Camera const &cam) {
   camLight_->setPos(cam.getPos());
   camLight_->setDir(cam.getDir());
   camLight_->upload(cam.getViewMat());
-  lightSphere_->render(cam);
-  lightSphere_->spotLight_->upload(cam.getViewMat());
+  /*lightSphere_->render(cam);
+  lightSphere_->spotLight_->upload(cam.getViewMat());*/
 
   for (auto el : grObjects_) {
     el->render(cam);

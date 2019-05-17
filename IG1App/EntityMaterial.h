@@ -15,6 +15,7 @@ public:
   virtual void update() = 0;
 
 protected:
+	IndexMesh *indexMesh_;
   Texture *textureMatTexture_{};
   Material *material_;
 };
@@ -26,21 +27,26 @@ public:
   void render(Camera const &camera) override;
   void update() override;
 
+protected:
+	GLUquadricObj *qObj;
 private:
-  GLUquadricObj *qObj;
   GLdouble radius_;
 };
-class LightSphere final : public Sphere {
+class LightSphere  : public Sphere {
+private:
+	GLUquadricObj *qObjSmall;
+	GLdouble radius_;
+	GLdouble ang = 0;
 public:
   SpotLight *spotLight_;
   LightSphere(GLdouble radius, const std::string &text, glm::dvec3 pos);
   ~LightSphere();
   SpotLight *getSpotLight();
+  void render(Camera const &camera) override;
+  void update() override;
 };
 class CurvedTerrain final : public EntityMaterial {
 private:
-  IndexMesh *indexMesh_;
-
 public:
   CurvedTerrain(GLdouble lado, GLuint numDiv, const std::string &text);
   ~CurvedTerrain();
