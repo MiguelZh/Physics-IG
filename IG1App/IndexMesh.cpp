@@ -5,16 +5,40 @@ IndexMesh::IndexMesh() : Mesh() { primitive = GL_TRIANGLES; }
 IndexMesh::~IndexMesh() { delete[] indices_; }
 
 void IndexMesh::render() {
-  Mesh::render();
-  // comandos OpenGL para enviar los datos de los arrays a la GPU (Mesh)
-  // Los comandos para la nueva tabla de índices:
-  glEnableClientState(GL_INDEX_ARRAY);
-  glIndexPointer(GL_UNSIGNED_INT, 0, indices_);
-  // Comando para renderizar la malla indexada enviada
-  //glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices_); PENDING FIX, THIS LINE TRIGGERS THE EXCEPTION
-  // comandos OpenGL para deshabilitar los datos enviados a la GPU (Mesh)
-  // El comando para la nueva tabla de índices:
-  glDisableClientState(GL_INDEX_ARRAY);
+	if (vertices != nullptr) {
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_DOUBLE, 0,
+			vertices);  // number of coordinates per vertex, type of
+						// each coordinate, stride, pointer
+		if (colors != nullptr) {
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(4, GL_DOUBLE, 0,
+				colors);  // number of coordinates per color, type of each
+						  // coordinate, stride, pointer
+		}
+		if (textures != nullptr) {
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, textures);
+		}
+		if (normals != nullptr) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, normals);
+			
+		}
+		// comandos OpenGL para enviar los datos de los arrays a la GPU (Mesh)
+		// Los comandos para la nueva tabla de índices:
+		glEnableClientState(GL_INDEX_ARRAY);
+		glIndexPointer(GL_UNSIGNED_INT, 0, indices_);
+		// Comando para renderizar la malla indexada enviada
+		glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices_);
+		// comandos OpenGL para deshabilitar los datos enviados a la GPU (Mesh)
+		// El comando para la nueva tabla de índices:
+		glDisableClientState(GL_INDEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
+
+	}
 }
 
 IndexMesh *IndexMesh::generateGrid(GLdouble lado, GLuint numDiv) {
@@ -35,9 +59,9 @@ IndexMesh *IndexMesh::generateGrid(GLdouble lado, GLuint numDiv) {
   m->numIndices = numDiv * numDiv * 6; // número de índices
   m->indices_ = new GLuint[m->numIndices];
 
+  GLuint i = 0; // array de índices
   for (int h = 0; h < numDiv; h++) {
     for (int k = 0; k < numDiv; k++) {
-      GLuint i = 0; // array de índices
       GLuint iv = h * numFC + k;
       m->indices_[i++] = iv;
       m->indices_[i++] = iv + numFC;
@@ -57,8 +81,8 @@ IndexMesh *IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv) {
 
   for (int f = 0; f < numFC; f++) {
     for (int c = 0; c < numFC; c++) {
-      m->textures[f * numFC + c] = glm::dvec2((-lado / 2) + c * 1 / numDiv,
-                                              (-lado / 2) - f * 1 / numDiv);
+      m->textures[f * numFC + c] = glm::dvec2(1 + c * 1.0 / numDiv,
+                                              1 - f * 1.0 / numDiv);
     }
   }
 
@@ -74,7 +98,7 @@ IndexMesh *IndexMesh::generateCurvedTerrain(GLdouble lado, GLuint numDiv) {
     m->vertices[j] = glm::dvec3(
         m->vertices[j].x,
         lado * curvatura / 2 -
-            curvatura / lado * (m->vertices[j].z * m->vertices[j].z) -
+            curvatura / lado * (m->vertices[j].x * m->vertices[j].x) -
             curvatura / lado * (m->vertices[j].z * m->vertices[j].z),
         m->vertices[j].z);
     m->normals[j] =
