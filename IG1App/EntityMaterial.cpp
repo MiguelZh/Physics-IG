@@ -43,7 +43,7 @@ LightSphere::LightSphere(GLdouble radius, const std::string &text,
   modelMat_ = glm::translate(getModelMat(), pos);
   B = radius_ * 2;
   A = 350;
-  C = -1 * A;
+  C = -15;
 }
 
 LightSphere::~LightSphere() { delete spotLight_; }
@@ -81,12 +81,10 @@ void LightSphere::render(Camera const &camera) {
 }
 
 void LightSphere::update() {
-	setModelMat(glm::dmat4(1));
-	auto aux = glm::rotate(getModelMat(), angle_ += glm::radians(10.), glm::dvec3(0, 0, 1.0));
-	setModelMat(glm::dmat4(1));
-	aux = glm::translate(aux, glm::dvec3(30 * cos(angle_), 30 * sin(angle_), 0));
-	aux = rotate(aux, angle2_ -= glm::radians(25.5), glm::dvec3(0, 0, 1));
-	setModelMat(aux);
+	ang += 0.05;
+	if (ang >= 360) ang = 0;
+	spotLight_->setPos(glm::dvec3(A *cos(ang), B *sin(ang) *sin(ang) + 150, -350 *sin(ang)* cos(ang)));
+	setModelMat(glm::translate(glm::dmat4(1), glm::dvec3(A*cos(ang), B*sin(ang)*sin(ang) + 150, -350*sin(ang)*cos(ang))));
 }
 
 CurvedTerrain::CurvedTerrain(GLdouble lado, GLuint numDiv,
