@@ -61,8 +61,15 @@ void LightSphere::render(Camera const &camera) {
   gluSphere(qObj, radius_ * 1.5, 72, 72);
   texture_.unbind();
 
+  if (rotatingAng > 90) {
+    rotatingAng -= 0.05;
+  } else
+    rotatingAng += 0.05;
+  setModelMat(glm::translate(
+      getModelMat(), glm::dvec3(radius_ * 1.4, radius_ * 1.4, radius_ * 1.4)));
   setModelMat(
-      glm::translate(getModelMat(), glm::dvec3(radius_*1.4, radius_*1.4, radius_*1.4)));
+      glm::translate(getModelMat(), glm::dvec3(radius_ * cos(rotatingAng),
+                                               -radius_ * sin(rotatingAng), 0)));
 
   material_->upload();
   gluQuadricDrawStyle(qObj, GLU_LINE);
@@ -81,10 +88,14 @@ void LightSphere::render(Camera const &camera) {
 }
 
 void LightSphere::update() {
-	ang += 0.05;
-	if (ang >= 360) ang = 0;
-	spotLight_->setPos(glm::dvec3(A *cos(ang), B *sin(ang) *sin(ang) + 150, -350 *sin(ang)* cos(ang)));
-	setModelMat(glm::translate(glm::dmat4(1), glm::dvec3(A*cos(ang), B*sin(ang)*sin(ang) + 150, -350*sin(ang)*cos(ang))));
+  ang += 0.05;
+  if (ang >= 360)
+    ang = 0;
+  spotLight_->setPos(glm::dvec3(A * cos(ang), B * sin(ang) * sin(ang) + 150,
+                                -350 * sin(ang) * cos(ang)));
+  setModelMat(glm::translate(
+      glm::dmat4(1), glm::dvec3(A * cos(ang), B * sin(ang) * sin(ang) + 150,
+                                -350 * sin(ang) * cos(ang))));
 }
 
 CurvedTerrain::CurvedTerrain(GLdouble lado, GLuint numDiv,

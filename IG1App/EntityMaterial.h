@@ -34,6 +34,7 @@ protected:
 class LightSphere  : public Sphere {
 private:
 	GLdouble ang = 0;
+	GLdouble rotatingAng = 0;
 	GLuint B;
 	GLuint A;
 	GLuint C;
