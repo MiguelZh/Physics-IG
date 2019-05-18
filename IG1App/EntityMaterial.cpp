@@ -53,7 +53,7 @@ SpotLight *LightSphere::getSpotLight() { return spotLight_; }
 void LightSphere::render(Camera const &camera) {
   auxMat_ = modelMat_;
   glEnable(GL_CULL_FACE);
-  // glShadeModel(GL_SMOOTH); // Gouraud Shading
+  glShadeModel(GL_SMOOTH); // Gouraud Shading
 
   gluQuadricDrawStyle(qObj, GLU_FILL);
   texture_.bind(GL_MODULATE);

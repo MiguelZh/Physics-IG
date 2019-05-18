@@ -1,12 +1,2 @@
 Miguel Zhefan Ye Ye
 Antonio Román, sustituye a Javier Camacho
-
-Las parte opcional realizada es la de la captura de pantalla, la planta no la he conseguido hacer 
-a tiempo.
-**Pasa algo bastante raro, puede que haya algo en mi proyecto que lo produzca, y es que de vez en
-cuando se produce un breakpoint, casi siempre en el "glutmainloop" pero a veces en otros sitios
-que yo desconozco.
-
-Dicho error ha sido solucionado, a demás de menores errores de sintaxis en algunas lineas(que no causaban el crasheo)
-se ha encontrado la razón del porqué no conseguía compilar el Glut, era debido a un "()" en vez de un "[]" , poniendo
-paréntesis lo pasaba a veces y otras veces no, sustituyendo los corchetes se arregla todo y el compilador ha dejado de quejarse
