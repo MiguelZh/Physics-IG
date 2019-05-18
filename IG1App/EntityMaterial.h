@@ -37,6 +37,9 @@ private:
 	GLUquadricObj *qObjSmall;
 	GLdouble radius_;
 	GLdouble ang = 0;
+	GLuint B;
+	GLuint A;
+	GLuint C;
 public:
   SpotLight *spotLight_;
   LightSphere(GLdouble radius, const std::string &text, glm::dvec3 pos);
