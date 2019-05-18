@@ -29,13 +29,10 @@ public:
 
 protected:
 	GLUquadricObj *qObj;
-private:
-  GLdouble radius_;
+	GLdouble radius_;
 };
 class LightSphere  : public Sphere {
 private:
-	GLUquadricObj *qObjSmall;
-	GLdouble radius_;
 	GLdouble ang = 0;
 	GLuint B;
 	GLuint A;

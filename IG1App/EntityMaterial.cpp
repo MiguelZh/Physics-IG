@@ -35,7 +35,6 @@ void Sphere::update() {}
 LightSphere::LightSphere(GLdouble radius, const std::string &text,
                          glm::dvec3 pos)
     : Sphere(radius, text) {
-	qObjSmall = gluNewQuadric();
   spotLight_ = new SpotLight();
   spotLight_->setPos(pos);
   spotLight_->setDir(glm::fvec3(100, 100, 0));
@@ -51,41 +50,43 @@ LightSphere::~LightSphere() { delete spotLight_; }
 
 SpotLight *LightSphere::getSpotLight() { return spotLight_; }
 
-void LightSphere::render(Camera const & camera)
-{
-	auxMat_ = modelMat_;
-	glEnable(GL_CULL_FACE);
-	//glShadeModel(GL_SMOOTH); // Gouraud Shading
+void LightSphere::render(Camera const &camera) {
+  auxMat_ = modelMat_;
+  glEnable(GL_CULL_FACE);
+  // glShadeModel(GL_SMOOTH); // Gouraud Shading
 
-	gluQuadricDrawStyle(qObj, GLU_FILL);
-	texture_.bind(GL_MODULATE);
-	uploadMvM(camera.getViewMat());
-	gluSphere(qObj, radius_ * 2, 72, 72);
-	texture_.unbind();
+  gluQuadricDrawStyle(qObj, GLU_FILL);
+  texture_.bind(GL_MODULATE);
+  uploadMvM(camera.getViewMat());
+  gluSphere(qObj, radius_ * 1.5, 72, 72);
+  texture_.unbind();
 
-	setModelMat(glm::translate(getModelMat(), glm::dvec3(radius_, radius_, radius_)));
+  setModelMat(
+      glm::translate(getModelMat(), glm::dvec3(radius_*1.4, radius_*1.4, radius_*1.4)));
 
-	material_->upload();
-	gluQuadricDrawStyle(qObj, GLU_LINE);
-	texture_.bind(GL_MODULATE);
-	uploadMvM(camera.getViewMat());
-	gluSphere(qObj, radius_ * 2, 36, 36);
-	texture_.unbind();
+  material_->upload();
+  gluQuadricDrawStyle(qObj, GLU_LINE);
+  texture_.bind(GL_MODULATE);
+  uploadMvM(camera.getViewMat());
+  gluSphere(qObj, radius_, 36, 36);
+  texture_.unbind();
 
-	spotLight_->upload(camera.getViewMat());
+  spotLight_->upload(camera.getViewMat());
 
-	glDisable(GL_CULL_FACE);
+  glDisable(GL_CULL_FACE);
 
-	modelMat_ = auxMat_;
+  modelMat_ = auxMat_;
+
+  glDisable(GL_CULL_FACE);
 }
 
-void LightSphere::update()
-{
-	ang += 0.1;
-	if (ang >= 360) ang = 0;
-	spotLight_->setPos(glm::dvec3(A *cos(ang), B *sin(ang) *sin(ang), C *sin(ang)* cos(ang)));
-	setModelMat(glm::translate(getModelMat(), glm::dvec3(A *cos(ang), B *sin(ang) *sin(ang), C *sin(ang)* cos(ang))));
-
+void LightSphere::update() {
+	setModelMat(glm::dmat4(1));
+	auto aux = glm::rotate(getModelMat(), angle_ += glm::radians(10.), glm::dvec3(0, 0, 1.0));
+	setModelMat(glm::dmat4(1));
+	aux = glm::translate(aux, glm::dvec3(30 * cos(angle_), 30 * sin(angle_), 0));
+	aux = rotate(aux, angle2_ -= glm::radians(25.5), glm::dvec3(0, 0, 1));
+	setModelMat(aux);
 }
 
 CurvedTerrain::CurvedTerrain(GLdouble lado, GLuint numDiv,
@@ -112,4 +113,3 @@ void CurvedTerrain::render(Camera const &camera) {
 }
 
 void CurvedTerrain::update() {}
-
