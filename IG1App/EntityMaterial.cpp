@@ -68,7 +68,7 @@ void LightSphere::render(Camera const &camera) {
   setModelMat(glm::translate(
       getModelMat(), glm::dvec3(radius_ * 1.4, radius_ * 1.4, radius_ * 1.4)));
   setModelMat(
-      glm::translate(getModelMat(), glm::dvec3(radius_ * cos(rotatingAng),
+      glm::translate(getModelMat(), glm::dvec3(radius_*0.8 * 2 * cos(rotatingAng),
                                                -radius_ * sin(rotatingAng), 0)));
 
   material_->upload();
