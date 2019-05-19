@@ -1,10 +1,10 @@
 #include "Scene.h"
-#include <gtc/matrix_transform.hpp>
-#include <gtc/type_ptr.hpp>
 #include "DirLight.h"
 #include "Material.h"
 #include "PosLight.h"
 #include "SpotLight.h"
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 using namespace glm;
 
@@ -13,8 +13,8 @@ Scene::Scene() = default;
 Scene::~Scene() { clearObjects(); }
 
 void Scene::init() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_CULL_FACE);
 }
@@ -26,7 +26,7 @@ void Scene::scene2D() {
   grObjects_.push_back(new CuboTex(30));
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(15, 30, 0)));
-  grObjects_.push_back(new Rectangulo(10, 10, -20));  // rect without texture
+  grObjects_.push_back(new Rectangulo(10, 10, -20)); // rect without texture
   grObjects_.back()->setModelMat(
       translate(grObjects_.back()->getModelMat(), dvec3(35, 55, 20)));
   grObjects_.push_back(new RectangleTex(200, 200, 4, 4));
@@ -54,8 +54,10 @@ void Scene::scene3D() {
 }
 
 void Scene::sceneExam() {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);           // enable Depth test
+  clearObjects();
+
+  glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+  glEnable(GL_DEPTH_TEST);          // enable Depth test
   glEnable(GL_TEXTURE_2D);
 
   grObjects_.push_back(new EjesRGB(50));
@@ -69,26 +71,27 @@ void Scene::sceneExam() {
 }
 
 void Scene::sceneSphere() {
+  clearObjects();
   glClearColor(0.0f, 0.0f, 0.2f, 1.0f);
-  glEnable(GL_DEPTH_TEST);  // enable Depth test
+  glEnable(GL_DEPTH_TEST); // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);
-  glEnable(GL_NORMALIZE);  // lights
+  glEnable(GL_NORMALIZE); // lights
 
   for (int i = 0; i < End; i++) {
     auto x = new Material();
     switch (i) {
-      case Copper:
-        x->setCopper();
-        break;
-      case Gold:
-        x->setGold();
-        break;
-      case Bronze:
-        x->setBronze();
-        break;
-      default:
-        break;
+    case Copper:
+      x->setCopper();
+      break;
+    case Gold:
+      x->setGold();
+      break;
+    case Bronze:
+      x->setBronze();
+      break;
+    default:
+      break;
     }
     materials_.push_back(x);
   }
@@ -178,6 +181,7 @@ void Scene::update() {
 }
 
 void Scene::clearObjects() {
-  for (auto el : grObjects_) delete el;
+  for (auto el : grObjects_)
+    delete el;
   grObjects_.clear();
 }
