@@ -34,9 +34,9 @@ class Sphere : public EntityMaterial {
 class LightSphere final : public Sphere {
   GLdouble angle_ = 0;
   GLdouble rotationAngle_ = 0;
-  GLuint a_;
-  GLuint b_;
-  GLuint c_;
+  GLdouble a_;
+  GLdouble b_;
+  GLdouble c_;
 
  public:
   SpotLight *spotLight_;

@@ -38,10 +38,7 @@ void Sphere::update() {}
 
 LightSphere::LightSphere(const GLdouble radius, const std::string &text,
                          const glm::dvec3 pos)
-    : Sphere(radius, text),
-      a_(350),
-      b_(static_cast<GLuint>(radius_ * 2)),
-      c_(-15) {
+    : Sphere(radius, text), a_(350.0), b_(radius_ * 2.0), c_(-15.0) {
   spotLight_ = new SpotLight();
   spotLight_->setPos(pos);
   spotLight_->setDir(glm::fvec3(100, 100, 0));
@@ -69,11 +66,11 @@ void LightSphere::render(Camera const &camera) {
     rotationAngle_ -= 0.05;
   } else
     rotationAngle_ += 0.05;
-  setModelMat(glm::translate(
+  setModelMat(translate(
       getModelMat(), glm::dvec3(radius_ * 1.4, radius_ * 1.4, radius_ * 1.4)));
-  setModelMat(glm::translate(getModelMat(),
-                             glm::dvec3(radius_ * 0.8 * 2 * cos(rotationAngle_),
-                                        -radius_ * sin(rotationAngle_), 0)));
+  setModelMat(translate(getModelMat(),
+                        glm::dvec3(radius_ * 0.8 * 2 * cos(rotationAngle_),
+                                   -radius_ * sin(rotationAngle_), 0)));
 
   material_->upload();
   gluQuadricDrawStyle(qObj, GLU_LINE);
@@ -92,12 +89,13 @@ void LightSphere::render(Camera const &camera) {
 }
 
 void LightSphere::update() {
-  angle_ += 0.05;
+  angle_ += 2.5;
   if (angle_ >= 360.0) angle_ -= 360.0;
 
-  const auto x = a_ * cos(angle_);
-  const auto y = b_ * sin(angle_) * sin(angle_) + 150.0;
-  const auto z = -350.0 * sin(angle_) * cos(angle_);
+  const auto angle = glm::radians(angle_);
+  const auto x = a_ * cos(angle);
+  const auto y = b_ * sin(angle) * sin(angle) + 150.0;
+  const auto z = c_ * sin(angle) * cos(angle);
   const auto position = glm::dvec3(x, y, z);
   spotLight_->setPos(position);
   setModelMat(translate(glm::dmat4(1.0), position));
