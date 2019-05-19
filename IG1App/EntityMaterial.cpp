@@ -20,7 +20,7 @@ Sphere::~Sphere() { gluDeleteQuadric(qObj); }
 
 void Sphere::render(Camera const &camera) {
   material_->upload();
-  glShadeModel(GL_SMOOTH); // Gouraud Shading
+  glShadeModel(GL_SMOOTH);  // Gouraud Shading
   glEnable(GL_CULL_FACE);
   texture_.bind(GL_MODULATE);
   uploadMvM(camera.getViewMat());
@@ -32,18 +32,18 @@ void Sphere::render(Camera const &camera) {
 
 void Sphere::update() {}
 
-LightSphere::LightSphere(GLdouble radius, const std::string &text,
-                         glm::dvec3 pos)
+LightSphere::LightSphere(const GLdouble radius, const std::string &text,
+                         const glm::dvec3 pos)
     : Sphere(radius, text) {
   spotLight_ = new SpotLight();
   spotLight_->setPos(pos);
   spotLight_->setDir(glm::fvec3(100, 100, 0));
   spotLight_->uploadLI();
   spotLight_->enable();
-  modelMat_ = glm::translate(getModelMat(), pos);
-  B = radius_ * 2;
-  A = 350;
-  C = -15;
+  modelMat_ = translate(getModelMat(), pos);
+  b_ = static_cast<GLuint>(radius_ * 2);
+  a_ = 350;
+  c_ = -15;
 }
 
 LightSphere::~LightSphere() { delete spotLight_; }
@@ -53,7 +53,7 @@ SpotLight *LightSphere::getSpotLight() { return spotLight_; }
 void LightSphere::render(Camera const &camera) {
   auxMat_ = modelMat_;
   glEnable(GL_CULL_FACE);
-  glShadeModel(GL_SMOOTH); // Gouraud Shading
+  glShadeModel(GL_SMOOTH);  // Gouraud Shading
 
   gluQuadricDrawStyle(qObj, GLU_FILL);
   texture_.bind(GL_MODULATE);
@@ -61,15 +61,15 @@ void LightSphere::render(Camera const &camera) {
   gluSphere(qObj, radius_ * 1.5, 72, 72);
   texture_.unbind();
 
-  if (rotatingAng > 90) {
-    rotatingAng -= 0.05;
+  if (rotationAngle_ > 90) {
+    rotationAngle_ -= 0.05;
   } else
-    rotatingAng += 0.05;
+    rotationAngle_ += 0.05;
   setModelMat(glm::translate(
       getModelMat(), glm::dvec3(radius_ * 1.4, radius_ * 1.4, radius_ * 1.4)));
-  setModelMat(
-      glm::translate(getModelMat(), glm::dvec3(radius_*0.8 * 2 * cos(rotatingAng),
-                                               -radius_ * sin(rotatingAng), 0)));
+  setModelMat(glm::translate(getModelMat(),
+                             glm::dvec3(radius_ * 0.8 * 2 * cos(rotationAngle_),
+                                        -radius_ * sin(rotationAngle_), 0)));
 
   material_->upload();
   gluQuadricDrawStyle(qObj, GLU_LINE);
@@ -88,19 +88,20 @@ void LightSphere::render(Camera const &camera) {
 }
 
 void LightSphere::update() {
-  ang += 0.05;
-  if (ang >= 360)
-    ang = 0;
-  spotLight_->setPos(glm::dvec3(A * cos(ang), B * sin(ang) * sin(ang) + 150,
-                                -350 * sin(ang) * cos(ang)));
-  setModelMat(glm::translate(
-      glm::dmat4(1), glm::dvec3(A * cos(ang), B * sin(ang) * sin(ang) + 150,
-                                -350 * sin(ang) * cos(ang))));
+  angle_ += 0.05;
+  if (angle_ >= 360) angle_ -= 360;
+
+  const auto x = a_ * cos(angle_);
+  const auto y = b_ * sin(angle_) * sin(angle_) + 150.0;
+  const auto z = -350.0 * sin(angle_) * cos(angle_);
+  const auto position = glm::dvec3(x, y, z);
+  spotLight_->setPos(position);
+  setModelMat(translate(glm::dmat4(1), position));
 }
 
-CurvedTerrain::CurvedTerrain(GLdouble lado, GLuint numDiv,
+CurvedTerrain::CurvedTerrain(const GLdouble side, const GLuint numDiv,
                              const std::string &text) {
-  indexMesh_ = IndexMesh::generateCurvedTerrain(lado, numDiv);
+  indexMesh_ = IndexMesh::generateCurvedTerrain(side, numDiv);
   texture_.load(text, 150);
 }
 

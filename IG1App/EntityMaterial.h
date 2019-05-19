@@ -6,7 +6,7 @@
 class IndexMesh;
 
 class EntityMaterial : public Entity {
-public:
+ public:
   EntityMaterial();
   virtual ~EntityMaterial();
   void setTexture(Texture *text);
@@ -14,31 +14,31 @@ public:
   virtual void render(Camera const &cam) = 0;
   virtual void update() = 0;
 
-protected:
-	IndexMesh *indexMesh_;
+ protected:
+  IndexMesh *indexMesh_{};
   Texture *textureMatTexture_{};
-  Material *material_;
+  Material *material_{};
 };
 
 class Sphere : public EntityMaterial {
-public:
+ public:
   Sphere(GLdouble radius, const std::string &text);
   ~Sphere();
   void render(Camera const &camera) override;
   void update() override;
 
-protected:
-	GLUquadricObj *qObj;
-	GLdouble radius_;
+ protected:
+  GLUquadricObj *qObj;
+  GLdouble radius_;
 };
-class LightSphere  : public Sphere {
-private:
-	GLdouble ang = 0;
-	GLdouble rotatingAng = 0;
-	GLuint B;
-	GLuint A;
-	GLuint C;
-public:
+class LightSphere final : public Sphere {
+  GLdouble angle_ = 0;
+  GLdouble rotationAngle_ = 0;
+  GLuint a_;
+  GLuint b_;
+  GLuint c_;
+
+ public:
   SpotLight *spotLight_;
   LightSphere(GLdouble radius, const std::string &text, glm::dvec3 pos);
   ~LightSphere();
@@ -46,10 +46,10 @@ public:
   void render(Camera const &camera) override;
   void update() override;
 };
+
 class CurvedTerrain final : public EntityMaterial {
-private:
-public:
-  CurvedTerrain(GLdouble lado, GLuint numDiv, const std::string &text);
+ public:
+  CurvedTerrain(GLdouble side, GLuint numDiv, const std::string &text);
   ~CurvedTerrain();
   void render(Camera const &camera) override;
   void update() override;
