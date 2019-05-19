@@ -63,19 +63,8 @@ void LightSphere::render(Camera const &camera) {
   gluSphere(qObj, radius_ * 1.5, 72, 72);
   texture_.unbind();
 
-  // Process the logic for the small sphere
-  if (rotationAngle_ > 90)
-    rotatingLeft_ = true;
-  else if (rotationAngle_ < -90)
-    rotatingLeft_ = false;
-  rotationAngle_ += rotatingLeft_ ? -3.2 : 3.2;
-
-  const auto rotation = glm::radians(rotationAngle_);
-  const auto x = radius_ * cos(rotation);
-  const auto y = -radius_ * sin(rotation);
-  setModelMat(translate(getModelMat(), glm::dvec3(x * 3.5, y * 3.5, 0)));
-
   // Render the small sphere
+  modelMat_ = moonModelMat_;
   material_->upload();
   gluQuadricDrawStyle(qObj, GLU_LINE);
   texture_.bind(GL_MODULATE);
@@ -97,12 +86,25 @@ void LightSphere::update() {
   if (angle_ >= 360.0) angle_ -= 360.0;
 
   const auto angle = glm::radians(angle_);
-  const auto x = a_ * cos(angle);
-  const auto y = b_ * sin(angle) * sin(angle) + 190.0;
-  const auto z = c_ * sin(angle) * cos(angle);
-  const auto position = glm::dvec3(x, y, z);
+  const auto x1 = a_ * cos(angle);
+  const auto y1 = b_ * sin(angle) * sin(angle) + 190.0;
+  const auto z1 = c_ * sin(angle) * cos(angle);
+  const auto position = glm::dvec3(x1, y1, z1);
   spotLight_->setPos(position);
   setModelMat(translate(glm::dmat4(1.0), position));
+
+  // Process the logic for the small sphere
+  if (rotationAngle_ > 90)
+    rotatingLeft_ = true;
+  else if (rotationAngle_ < -90)
+    rotatingLeft_ = false;
+  rotationAngle_ += rotatingLeft_ ? -3.2 : 3.2;
+
+  const auto rotation = glm::radians(rotationAngle_);
+  const auto x2 = radius_ * cos(rotation);
+  const auto y2 = -radius_ * sin(rotation);
+  const auto mul = 3.5;
+  moonModelMat_ = translate(getModelMat(), glm::dvec3(x2 * mul, y2 * mul, 0.0));
 }
 
 CurvedTerrain::CurvedTerrain(const GLdouble side, const GLuint numDiv,

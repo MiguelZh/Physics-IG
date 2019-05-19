@@ -38,6 +38,7 @@ class LightSphere final : public Sphere {
   GLdouble b_;
   GLdouble c_;
   GLboolean rotatingLeft_ = false;
+  glm::dmat4 moonModelMat_;
 
  public:
   SpotLight *spotLight_;
