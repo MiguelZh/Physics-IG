@@ -42,7 +42,7 @@ class LightSphere final : public Sphere {
   SpotLight *spotLight_;
   LightSphere(GLdouble radius, const std::string &text, glm::dvec3 pos);
   ~LightSphere();
-  SpotLight *getSpotLight();
+  SpotLight *getSpotLight() const;
   void render(Camera const &camera) override;
   void update() override;
 };

@@ -1,7 +1,13 @@
 #include "EntityMaterial.h"
 #include "IndexMesh.h"
+
 EntityMaterial::EntityMaterial() = default;
-EntityMaterial::~EntityMaterial() = default;
+
+EntityMaterial::~EntityMaterial() {
+  delete indexMesh_;
+  delete textureMatTexture_;
+  delete material_;
+}
 
 void EntityMaterial::setTexture(Texture *text) { textureMatTexture_ = text; }
 
@@ -11,8 +17,6 @@ Sphere::Sphere(const GLdouble radius, const std::string &text) {
   radius_ = radius;
   qObj = gluNewQuadric();
   texture_.load(text, 150);
-  // gluQuadricNormals(qObj, GLU_SMOOTH);
-  // gluQuadricOrientation(qObj, GLU_OUTSIDE);
   gluQuadricTexture(qObj, GL_TRUE);
 }
 
@@ -34,21 +38,21 @@ void Sphere::update() {}
 
 LightSphere::LightSphere(const GLdouble radius, const std::string &text,
                          const glm::dvec3 pos)
-    : Sphere(radius, text) {
+    : Sphere(radius, text),
+      a_(350),
+      b_(static_cast<GLuint>(radius_ * 2)),
+      c_(-15) {
   spotLight_ = new SpotLight();
   spotLight_->setPos(pos);
   spotLight_->setDir(glm::fvec3(100, 100, 0));
   spotLight_->uploadLI();
   spotLight_->enable();
   modelMat_ = translate(getModelMat(), pos);
-  b_ = static_cast<GLuint>(radius_ * 2);
-  a_ = 350;
-  c_ = -15;
 }
 
 LightSphere::~LightSphere() { delete spotLight_; }
 
-SpotLight *LightSphere::getSpotLight() { return spotLight_; }
+SpotLight *LightSphere::getSpotLight() const { return spotLight_; }
 
 void LightSphere::render(Camera const &camera) {
   auxMat_ = modelMat_;
@@ -89,14 +93,14 @@ void LightSphere::render(Camera const &camera) {
 
 void LightSphere::update() {
   angle_ += 0.05;
-  if (angle_ >= 360) angle_ -= 360;
+  if (angle_ >= 360.0) angle_ -= 360.0;
 
   const auto x = a_ * cos(angle_);
   const auto y = b_ * sin(angle_) * sin(angle_) + 150.0;
   const auto z = -350.0 * sin(angle_) * cos(angle_);
   const auto position = glm::dvec3(x, y, z);
   spotLight_->setPos(position);
-  setModelMat(translate(glm::dmat4(1), position));
+  setModelMat(translate(glm::dmat4(1.0), position));
 }
 
 CurvedTerrain::CurvedTerrain(const GLdouble side, const GLuint numDiv,
@@ -105,10 +109,7 @@ CurvedTerrain::CurvedTerrain(const GLdouble side, const GLuint numDiv,
   texture_.load(text, 150);
 }
 
-CurvedTerrain::~CurvedTerrain() {
-  delete indexMesh_;
-  indexMesh_ = nullptr;
-}
+CurvedTerrain::~CurvedTerrain() = default;
 
 void CurvedTerrain::render(Camera const &camera) {
   if (indexMesh_ != nullptr) {
