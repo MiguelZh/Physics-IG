@@ -69,7 +69,7 @@ void Scene::sceneExam() {
 }
 
 void Scene::sceneSphere() {
-  glClearColor(0.0, 0.0, 0.2, 1.0);
+  glClearColor(0.0f, 0.0f, 0.2f, 1.0f);
   glEnable(GL_DEPTH_TEST);  // enable Depth test
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);

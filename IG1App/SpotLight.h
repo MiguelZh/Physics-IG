@@ -11,6 +11,6 @@ class SpotLight final : public PosLight {
 
   void upload(glm::dmat4 const& modelMat) const override;
   void setDir(glm::fvec3 dir);
-  void setExponent(double exponent);
-  void setAngle(double angle);
+  void setExponent(GLfloat exponent);
+  void setAngle(GLfloat angle);
 };

@@ -13,10 +13,10 @@ void SpotLight::upload(glm::dmat4 const& modelMat) const {
 
 void SpotLight::setDir(const glm::fvec3 dir) { spotDir_ = glm::fvec4(dir, 0); }
 
-void SpotLight::setExponent(const double exponent) {
+void SpotLight::setExponent(const GLfloat exponent) {
   glLightf(id_, GL_SPOT_EXPONENT, exponent);
 }
 
-void SpotLight::setAngle(const double angle) {
+void SpotLight::setAngle(const GLfloat angle) {
   glLightf(id_, GL_SPOT_CUTOFF, angle);
 }

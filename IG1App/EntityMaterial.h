@@ -15,9 +15,9 @@ class EntityMaterial : public Entity {
   virtual void update() = 0;
 
  protected:
-  IndexMesh *indexMesh_{};
-  Texture *textureMatTexture_{};
-  Material *material_{};
+  IndexMesh *indexMesh_ = nullptr;
+  Texture *textureMatTexture_ = nullptr;
+  Material *material_ = nullptr;
 };
 
 class Sphere : public EntityMaterial {

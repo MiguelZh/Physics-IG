@@ -6,7 +6,6 @@ EntityMaterial::EntityMaterial() = default;
 EntityMaterial::~EntityMaterial() {
   delete indexMesh_;
   delete textureMatTexture_;
-  delete material_;
 }
 
 void EntityMaterial::setTexture(Texture *text) { textureMatTexture_ = text; }
@@ -108,7 +107,8 @@ void LightSphere::update() {
 }
 
 CurvedTerrain::CurvedTerrain(const GLdouble side, const GLuint numDiv,
-                             const std::string &text) {
+                             const std::string &text)
+    : EntityMaterial() {
   indexMesh_ = IndexMesh::generateCurvedTerrain(side, numDiv);
   texture_.load(text, 150);
 }
