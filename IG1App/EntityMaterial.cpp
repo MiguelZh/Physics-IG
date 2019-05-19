@@ -56,22 +56,26 @@ void LightSphere::render(Camera const &camera) {
   glEnable(GL_CULL_FACE);
   glShadeModel(GL_SMOOTH);  // Gouraud Shading
 
+  // Draw the big sphere
   gluQuadricDrawStyle(qObj, GLU_FILL);
   texture_.bind(GL_MODULATE);
   uploadMvM(camera.getViewMat());
   gluSphere(qObj, radius_ * 1.5, 72, 72);
   texture_.unbind();
 
-  if (rotationAngle_ > 90) {
-    rotationAngle_ -= 0.05;
-  } else
-    rotationAngle_ += 0.05;
-  setModelMat(translate(
-      getModelMat(), glm::dvec3(radius_ * 1.4, radius_ * 1.4, radius_ * 1.4)));
-  setModelMat(translate(getModelMat(),
-                        glm::dvec3(radius_ * 0.8 * 2 * cos(rotationAngle_),
-                                   -radius_ * sin(rotationAngle_), 0)));
+  // Process the logic for the small sphere
+  if (rotationAngle_ > 90)
+    rotatingLeft_ = true;
+  else if (rotationAngle_ < -90)
+    rotatingLeft_ = false;
+  rotationAngle_ += rotatingLeft_ ? -3.2 : 3.2;
 
+  const auto rotation = glm::radians(rotationAngle_);
+  const auto x = radius_ * cos(rotation);
+  const auto y = -radius_ * sin(rotation);
+  setModelMat(translate(getModelMat(), glm::dvec3(x * 3.5, y * 3.5, 0)));
+
+  // Render the small sphere
   material_->upload();
   gluQuadricDrawStyle(qObj, GLU_LINE);
   texture_.bind(GL_MODULATE);
@@ -94,7 +98,7 @@ void LightSphere::update() {
 
   const auto angle = glm::radians(angle_);
   const auto x = a_ * cos(angle);
-  const auto y = b_ * sin(angle) * sin(angle) + 150.0;
+  const auto y = b_ * sin(angle) * sin(angle) + 190.0;
   const auto z = c_ * sin(angle) * cos(angle);
   const auto position = glm::dvec3(x, y, z);
   spotLight_->setPos(position);

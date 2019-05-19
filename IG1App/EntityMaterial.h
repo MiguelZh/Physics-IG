@@ -37,6 +37,7 @@ class LightSphere final : public Sphere {
   GLdouble a_;
   GLdouble b_;
   GLdouble c_;
+  GLboolean rotatingLeft_ = false;
 
  public:
   SpotLight *spotLight_;
