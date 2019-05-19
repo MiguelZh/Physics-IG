@@ -15,12 +15,12 @@ void EntityMaterial::setMaterial(Material *material) { material_ = material; }
 
 Sphere::Sphere(const GLdouble radius, const std::string &text) {
   radius_ = radius;
-  qObj = gluNewQuadric();
+  qObj_ = gluNewQuadric();
   texture_.load(text, 150);
-  gluQuadricTexture(qObj, GL_TRUE);
+  gluQuadricTexture(qObj_, GL_TRUE);
 }
 
-Sphere::~Sphere() { gluDeleteQuadric(qObj); }
+Sphere::~Sphere() { gluDeleteQuadric(qObj_); }
 
 void Sphere::render(Camera const &camera) {
   material_->upload();
@@ -28,7 +28,7 @@ void Sphere::render(Camera const &camera) {
   glEnable(GL_CULL_FACE);
   texture_.bind(GL_MODULATE);
   uploadMvM(camera.getViewMat());
-  gluSphere(qObj, radius_, 36, 36);
+  gluSphere(qObj_, radius_, 36, 36);
   texture_.unbind();
 
   glDisable(GL_CULL_FACE);
@@ -57,19 +57,19 @@ void LightSphere::render(Camera const &camera) {
   glShadeModel(GL_SMOOTH);  // Gouraud Shading
 
   // Draw the big sphere
-  gluQuadricDrawStyle(qObj, GLU_FILL);
+  gluQuadricDrawStyle(qObj_, GLU_FILL);
   texture_.bind(GL_MODULATE);
   uploadMvM(camera.getViewMat());
-  gluSphere(qObj, radius_ * 1.5, 72, 72);
+  gluSphere(qObj_, radius_ * 1.5, 72, 72);
   texture_.unbind();
 
   // Render the small sphere
   modelMat_ = moonModelMat_;
   material_->upload();
-  gluQuadricDrawStyle(qObj, GLU_LINE);
+  gluQuadricDrawStyle(qObj_, GLU_LINE);
   texture_.bind(GL_MODULATE);
   uploadMvM(camera.getViewMat());
-  gluSphere(qObj, radius_, 36, 36);
+  gluSphere(qObj_, radius_, 36, 36);
   texture_.unbind();
 
   spotLight_->upload(camera.getViewMat());

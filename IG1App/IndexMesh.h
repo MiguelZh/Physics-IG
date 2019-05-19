@@ -8,8 +8,8 @@ class IndexMesh final : public Mesh {
  public:
   IndexMesh();
   ~IndexMesh();
-  void render();
-  static IndexMesh* generateGrid(GLdouble lado, GLuint numDiv);
-  static IndexMesh* generateGridTex(GLdouble lado, GLuint numDiv);
-  static IndexMesh* generateCurvedTerrain(GLdouble lado, GLuint numDiv);
+  void render() const;
+  static IndexMesh* generateGrid(GLdouble side, GLuint numDiv);
+  static IndexMesh* generateGridTex(GLdouble side, GLuint numDiv);
+  static IndexMesh* generateCurvedTerrain(GLdouble side, GLuint numDiv);
 };

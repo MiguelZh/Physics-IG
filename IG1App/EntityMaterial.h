@@ -28,9 +28,10 @@ class Sphere : public EntityMaterial {
   void update() override;
 
  protected:
-  GLUquadricObj *qObj;
+  GLUquadricObj *qObj_;
   GLdouble radius_;
 };
+
 class LightSphere final : public Sphere {
   GLdouble angle_ = 0;
   GLdouble rotationAngle_ = 0;

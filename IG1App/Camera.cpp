@@ -109,13 +109,9 @@ void Camera::changePrj() {
   uploadScale(0.0);
 }
 
-glm::dvec3 Camera::getPos() const {
-    return eye_;
-}
+dvec3 Camera::getPos() const { return eye_; }
 
-glm::dvec3 Camera::getDir() const {
-    return front_;
-}
+dvec3 Camera::getDir() const { return front_; }
 
 void Camera::orbit(const GLdouble incAng, const GLdouble incY) {
   ang_ += incAng;

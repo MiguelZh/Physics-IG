@@ -1,26 +1,16 @@
 #pragma once
 #include "PosLight.h"
 
-class SpotLight : public PosLight {
+class SpotLight final : public PosLight {
  protected:
-  glm::fvec4 spotDir = {0.0, -1.0, 0.0, 0};
+  glm::fvec4 spotDir_ = {0.0, -1.0, 0.0, 0};
 
  public:
   SpotLight();
   ~SpotLight();
-  virtual void upload(glm::dmat4 const &modelMat) {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixd(value_ptr(modelMat));
-	glLightf(id_, GL_SPOT_CUTOFF, 90);
-	glLightf(id_, GL_SPOT_EXPONENT, 4.0);
-	glLightfv(id_, GL_POSITION, glm::value_ptr(position_));
 
-  }
-  virtual void setDir(glm::fvec3 dir) { spotDir = glm::fvec4(dir, 0); }
-  virtual void setExponent(const double exponent) {
-    glLightf(id_, GL_SPOT_EXPONENT, exponent);
-  }
-  virtual void setAngle(const double angle) {
-    glLightf(id_, GL_SPOT_CUTOFF, angle);
-  }
+  void upload(glm::dmat4 const& modelMat) const override;
+  void setDir(glm::fvec3 dir);
+  void setExponent(double exponent);
+  void setAngle(double angle);
 };

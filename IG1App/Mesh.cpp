@@ -365,3 +365,7 @@ Mesh* Mesh::bipiramideExam(const GLdouble l, const GLdouble h) {
   m->colors[11] = dvec4(0.5, 0.5, 0.0, 1.0);
   return m;
 }
+
+Mesh::Mesh() = default;
+dvec3* Mesh::getVertices() const { return vertices; }
+dvec4* Mesh::getColors() const { return colors; }

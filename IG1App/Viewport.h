@@ -1,26 +1,19 @@
 #pragma once
 #include <GL/freeglut.h>
 
-//-------------------------------------------------------------------------
-
 class Viewport final {
  public:
-  Viewport(const GLsizei aw, const GLsizei ah) : width_(aw), height_(ah) {}
-  ~Viewport() = default;
+  Viewport(GLsizei aw, GLsizei ah);
+  ~Viewport();
 
-  GLsizei getLeft() const { return xLeft_; }  // viewport left position
-  GLsizei getBot() const { return yBot_; }    // viewport bottom position
-  GLsizei getW() const { return width_; }     // viewport width
-  GLsizei getH() const { return height_; }    // viewport height
+  GLsizei getLeft() const;  // viewport left position
+  GLsizei getBot() const;   // viewport bottom position
+  GLsizei getW() const;     // viewport width
+  GLsizei getH() const;     // viewport height
 
-  void setPos(const GLsizei al, const GLsizei ab) {
-    xLeft_ = al;
-    yBot_ = ab;
-  }  // set viewport position (left and bottom)
-  void setSize(const GLsizei aw, const GLsizei ah) {
-    width_ = aw;
-    height_ = ah;
-  }  // set viewport size (width and height)
+  void setPos(GLsizei al,
+              GLsizei ab);  // set viewport position (left and bottom)
+  void setSize(GLsizei aw, GLsizei ah);  // set viewport size (width and height)
 
   // transfers viewport to the GPU
   void upload() const;

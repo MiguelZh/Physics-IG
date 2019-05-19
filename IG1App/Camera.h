@@ -2,7 +2,6 @@
 #pragma once
 #include <GL/freeglut.h>
 #include <glm.hpp>
-
 #include "Viewport.h"
 //-------------------------------------------------------------------------
 

@@ -41,6 +41,14 @@ void Texture::save(const std::string& bmpName) {
   pic.save_bmp24BGR(bmpName);
 }
 
+Texture::Texture() : w_(0), h_(0), id_(0) {}
+
+Texture::~Texture() {
+  if (id_ != 0) glDeleteTextures(1, &id_);
+}
+
+void Texture::unbind() { glBindTexture(GL_TEXTURE_2D, 0); }
+
 void Texture::load(const std::string& bmpName, const GLubyte alpha) {
   if (id_ == 0) init();
   PixMap32RGBA pixMap;

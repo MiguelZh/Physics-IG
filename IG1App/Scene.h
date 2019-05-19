@@ -1,13 +1,12 @@
 #pragma once
 #include <vector>
-
 #include "Camera.h"
 #include "Entity.h"
 #include "EntityMaterial.h"
+
 class DirLight;
 class SpotLight;
 class PosLight;
-//-------------------------------------------------------------------------
 
 class Scene final {
   void clearObjects();
@@ -32,14 +31,14 @@ class Scene final {
  protected:
   std::vector<Entity*> grObjects_;  // Entities (graphics objects) of the scene
   std::vector<Material*> materials_;
-  enum numMat
+  enum NumMat
   {
 	  Copper,
 	  Gold,
 	  Bronze,
 	  End
   };
-  DirLight* dirLight;
+  DirLight* dirLight_;
   SpotLight* camLight_;
   LightSphere * lightSphere_;
 };

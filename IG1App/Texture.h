@@ -3,14 +3,13 @@
 
 class Texture final {
  public:
-  Texture() : w_(0), h_(0), id_(0){};
-  ~Texture() {
-    if (id_ != 0) glDeleteTextures(1, &id_);
-  };
+  Texture();
+  ~Texture();
   void load(const std::string& bmpName, GLubyte alpha = 255);
   // Load and transfer to the GPU
   void bind(GLint mode = GL_REPLACE) const;
-  static void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
+  static void unbind();
+  ;
   void loadColorBuffer();
   static void save(const std::string& bmpName);
 

@@ -4,10 +4,8 @@
 // #include <gl/GLU.h>  // OpenGL Utility Library
 
 #include <GL/freeglut.h>  // Free OpenGL Utility Toolkit for creating windows, initializing OpenGL contexts, and handling input events
-
 #include <glm.hpp>  // OpenGL Mathematics. A C++ mathematics library for graphics programming
 #include <iostream>
-
 #include "Camera.h"
 #include "Scene.h"
 #include "Viewport.h"

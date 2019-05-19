@@ -1,6 +1,5 @@
 #pragma once
 #include <GL/freeglut.h>
-
 #include <glm.hpp>
 
 class Light {
@@ -15,10 +14,10 @@ class Light {
  public:
   Light();
   virtual ~Light();
-  virtual void uploadLI();
-  virtual void upload(glm::dmat4 const& modelViewMat) = 0;
-  void disable();
-  void enable();
+  virtual void uploadLI() const;
+  virtual void upload(glm::dmat4 const& modelViewMat) const = 0;
+  void disable() const;
+  void enable() const;
   void setAmb(glm::fvec4 amb);
   bool getEnabled() const;
   void setEnabled(bool enable);

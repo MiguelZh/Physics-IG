@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
+
 #include <glm.hpp>
 
 #include "Camera.h"
@@ -69,8 +70,6 @@ class Triangle : public Entity {
 };
 
 class TrianguloAnimado final : public Triangle {
-  glm::dmat4 aux_ = modelMat_;
-
  public:
   TrianguloAnimado(GLdouble vertices);
   ~TrianguloAnimado();
@@ -151,8 +150,8 @@ class Planta final : public Entity {
 };
 
 class Piramide final : public Entity {
-  double lado, altura, alturaActual, angulo;
-  bool subiendo;
+  double side_, height_, currentHeight_, angle_;
+  bool movingUp_;
 
  public:
   Piramide(GLdouble length, GLdouble height);
