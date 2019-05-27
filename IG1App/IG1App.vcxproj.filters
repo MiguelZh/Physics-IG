@@ -43,11 +43,20 @@
     <Filter Include="Archivos de código fuente\Camera">
       <UniqueIdentifier>{6ae2a3ee-2568-40dd-9ee6-a86d3c1e5cf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\GameObjects">
+      <UniqueIdentifier>{904876b2-f1e2-4bc7-b167-3f53e4ac01c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\GameObjects">
+      <UniqueIdentifier>{2b698508-da3b-4289-9e97-4e81027113c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\GameObjets+material">
+      <UniqueIdentifier>{8432122a-da8a-4440-a071-c9b18f42756c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\GameObjets+material">
+      <UniqueIdentifier>{3931260f-46c9-4236-bda4-de3770c2b667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scene.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Archivos de encabezado\Lights</Filter>
     </ClInclude>
@@ -86,6 +95,63 @@
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>Archivos de encabezado\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="EjesRGB.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Poliespiral.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TrianguloAnimado.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangulo.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Estrella3D.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Caja.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleTex.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Estrella3DTex.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CuboTex.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Cristalera.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Planta.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Piramide.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Foto.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CurvedTerrain.h">
+      <Filter>Archivos de encabezado\GameObjets+material</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Archivos de encabezado\GameObjets+material</Filter>
+    </ClInclude>
+    <ClInclude Include="LightSphere.h">
+      <Filter>Archivos de encabezado\GameObjets+material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +199,60 @@
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Archivos de código fuente\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="EjesRGB.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Poliespiral.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="TrianguloAnimado.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangulo.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Estrella3D.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Caja.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleTex.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Estrella3DTex.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CuboTex.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Cristalera.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Planta.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Piramide.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Foto.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CurvedTerrain.cpp">
+      <Filter>Archivos de código fuente\GameObjets+material</Filter>
+    </ClCompile>
+    <ClCompile Include="LightSphere.cpp">
+      <Filter>Archivos de código fuente\GameObjets+material</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Archivos de código fuente\GameObjets+material</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

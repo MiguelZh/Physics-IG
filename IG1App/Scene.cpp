@@ -5,7 +5,21 @@
 #include "SpotLight.h"
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
-
+#include "LightSphere.h"
+#include "Sphere.h"
+#include "Estrella3D.h"
+#include "Estrella3DTex.h"
+#include "RectangleTex.h"
+#include "Rectangulo.h"
+#include "CuboTex.h"
+#include "TrianguloAnimado.h"
+#include "Cristalera.h"
+#include "Foto.h"
+#include "Poliespiral.h"
+#include "Dragon.h"
+#include "EjesRGB.h"
+#include "Piramide.h"
+#include "CurvedTerrain.h"
 using namespace glm;
 
 Scene::Scene() = default;
@@ -62,7 +76,6 @@ void Scene::sceneExam() {
 
   grObjects_.push_back(new EjesRGB(50));
   grObjects_.push_back(new Piramide(20, 20));
-  // grObjects.push_back(new Rectangulo(100, 100, -20)); // rect without texture
   grObjects_.push_back(new RectangleTex(150, 150, 10, 10));
   grObjects_.back()->setModelMat(
       rotate(grObjects_.back()->getModelMat(), radians(90.), dvec3(1, 0, 0)));
@@ -101,27 +114,16 @@ void Scene::sceneSphere() {
   dirLight_->enable();
 
   camLight_ = new SpotLight();
+  //To inicialize a "light" write the following two lines 
   camLight_->uploadLI();
   camLight_->enable();
   grObjects_.push_back(new EjesRGB(150));
-  /*  grObjects_.push_back(new Sphere(60, "../Bmps/sun.bmp"));
-    grObjects_.back()->setModelMat(
-        translate(grObjects_.back()->getModelMat(), dvec3(0, 200, 0)));
-    grObjects_.push_back(new Sphere(30, "../Bmps/mars.bmp"));
-    grObjects_.back()->setModelMat(
-        translate(grObjects_.back()->getModelMat(), dvec3(240, 200, 0)));
-    grObjects_.push_back(new Sphere(35, "../Bmps/moon.bmp"));
-    grObjects_.back()->setModelMat(
-        translate(grObjects_.back()->getModelMat(), dvec3(-200, 180, 0)));
-    grObjects_.push_back(new Sphere(100, "../Bmps/earth.bmp"));
-    grObjects_.back()->setModelMat(
-        translate(grObjects_.back()->getModelMat(), dvec3(0, -100, 0)));*/
 
   lightSphere_ = new LightSphere(30, "../Bmps/papelE.bmp", dvec3(0, 150, 0));
   lightSphere_->setMaterial(materials_[Gold]);
   grObjects_.push_back(lightSphere_);
-  // grObjects_.back()->setModelMat(
 
+  // materials are needed if you want to see the light
   auto earth = new Sphere(70, "../Bmps/earth.bmp");
   earth->setMaterial(materials_[Bronze]);
   grObjects_.push_back(earth);
@@ -167,8 +169,6 @@ void Scene::render(Camera const &cam) {
   camLight_->setPos(cam.getPos());
   camLight_->setDir(cam.getDir());
   camLight_->upload(cam.getViewMat());
-  /*lightSphere_->render(cam);
-  lightSphere_->spotLight_->upload(cam.getViewMat());*/
 
   for (auto el : grObjects_) {
     el->render(cam);

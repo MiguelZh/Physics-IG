@@ -7,6 +7,7 @@
 class DirLight;
 class SpotLight;
 class PosLight;
+class LightSphere;
 
 class Scene final {
   void clearObjects();

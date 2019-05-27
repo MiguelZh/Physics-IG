@@ -120,36 +120,72 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Caja.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cristalera.h" />
+    <ClInclude Include="CuboTex.h" />
+    <ClInclude Include="CurvedTerrain.h" />
     <ClInclude Include="DirLight.h" />
+    <ClInclude Include="Dragon.h" />
+    <ClInclude Include="EjesRGB.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityMaterial.h" />
+    <ClInclude Include="Estrella3D.h" />
+    <ClInclude Include="Estrella3DTex.h" />
+    <ClInclude Include="Foto.h" />
     <ClInclude Include="IndexMesh.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LightSphere.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Piramide.h" />
     <ClInclude Include="Pixmap32RGBA.h" />
+    <ClInclude Include="Planta.h" />
+    <ClInclude Include="Poliespiral.h" />
     <ClInclude Include="PosLight.h" />
+    <ClInclude Include="RectangleTex.h" />
+    <ClInclude Include="Rectangulo.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="TrianguloAnimado.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Caja.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cristalera.cpp" />
+    <ClCompile Include="CuboTex.cpp" />
+    <ClCompile Include="CurvedTerrain.cpp" />
     <ClCompile Include="DirLight.cpp" />
+    <ClCompile Include="Dragon.cpp" />
+    <ClCompile Include="EjesRGB.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityMaterial.cpp" />
+    <ClCompile Include="Estrella3D.cpp" />
+    <ClCompile Include="Estrella3DTex.cpp" />
+    <ClCompile Include="Foto.cpp" />
     <ClCompile Include="IndexMesh.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightSphere.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Piramide.cpp" />
     <ClCompile Include="Pixmap32RGBA.cpp" />
+    <ClCompile Include="Planta.cpp" />
+    <ClCompile Include="Poliespiral.cpp" />
     <ClCompile Include="PosLight.cpp" />
+    <ClCompile Include="RectangleTex.cpp" />
+    <ClCompile Include="Rectangulo.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="TrianguloAnimado.cpp" />
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
