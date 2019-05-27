@@ -19,33 +19,33 @@
     <Filter Include="Archivos de código fuente\Lights">
       <UniqueIdentifier>{400dd895-6752-4588-92c5-a531f8172eae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Entities">
+      <UniqueIdentifier>{2b66efa8-de93-438a-bc7c-83bbd109e0cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Entities">
+      <UniqueIdentifier>{fc93043a-d6d4-4ce3-b2d7-2c4ac73b95bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Textures">
+      <UniqueIdentifier>{b6261f95-bd1e-4bcc-83de-d363225ff302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Textures">
+      <UniqueIdentifier>{14ca0cfd-c607-4956-8200-4ad9e7e5a123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Mesh">
+      <UniqueIdentifier>{24f5222c-de40-471c-be44-ea23d46b9ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Mesh">
+      <UniqueIdentifier>{8f0e4515-a119-46fc-9987-955214687715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Camera">
+      <UniqueIdentifier>{0e9f830b-c30b-43b6-92aa-92e900ec89cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Camera">
+      <UniqueIdentifier>{6ae2a3ee-2568-40dd-9ee6-a86d3c1e5cf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Viewport.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Pixmap32RGBA.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityMaterial.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
@@ -60,39 +60,39 @@
     <ClInclude Include="PosLight.h">
       <Filter>Archivos de encabezado\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="EntityMaterial.h">
+      <Filter>Archivos de encabezado\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Archivos de encabezado\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Pixmap32RGBA.h">
+      <Filter>Archivos de encabezado\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Archivos de encabezado\Textures</Filter>
+    </ClInclude>
     <ClInclude Include="IndexMesh.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Archivos de encabezado\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Archivos de encabezado\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Archivos de encabezado\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
+      <Filter>Archivos de encabezado\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Viewport.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Pixmap32RGBA.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityMaterial.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
@@ -107,8 +107,32 @@
     <ClCompile Include="PosLight.cpp">
       <Filter>Archivos de código fuente\Lights</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Archivos de código fuente\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityMaterial.cpp">
+      <Filter>Archivos de código fuente\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Archivos de código fuente\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Pixmap32RGBA.cpp">
+      <Filter>Archivos de código fuente\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Archivos de código fuente\Mesh</Filter>
+    </ClCompile>
     <ClCompile Include="IndexMesh.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Archivos de código fuente\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Archivos de código fuente\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>Archivos de código fuente\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
